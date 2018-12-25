@@ -22,7 +22,11 @@
       ]
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.technonia.hangilmonitor"
+    },
+    "android": {
+      "package": "com.technonia.hangilmonitor"
     }
   }
 }
