@@ -6,9 +6,11 @@ import {
     StyleSheet,
     TouchableOpacity,
     TextInput,
-    Image } from 'react-native';
+    Image
+} from 'react-native';
 
 export default class LoginScreen extends React.Component {
+
   static navigationOptions = {
     title: '한길하수처리모니터링',
     headerStyle: {
@@ -16,6 +18,7 @@ export default class LoginScreen extends React.Component {
     },
     headerTintColor: '#fff',
   };
+
   render() {
     const {navigate} = this.props.navigation;
     return(

@@ -16,20 +16,16 @@ export default class Monitor extends React.Component {
     headerTintColor: '#fff',
   };
 
-  state = {
-    isLoaded: false,
-    name: '',
-    compType: '',
-    companyName: '',
-    companyId: ''
-  };
- 
 
   getData() {
     return require('../assets/cards.json');
   }
 
-
+  /**
+   * The constructor of the Monitor component.
+   *
+   * @param {*} props 
+   */
   constructor(props) {
     super(props);
     const siteData = this.getData();
@@ -37,6 +33,8 @@ export default class Monitor extends React.Component {
         isLoaded: false,
         name: '',
         compType: '',
+        companyName: '',
+        companyId: '',
         siteData: siteData
     };
   }
@@ -52,9 +50,12 @@ export default class Monitor extends React.Component {
     }
   };
 
+  /**
+   * 
+   */
   componentDidMount() {
-    /*
-    fetch("https://api.example.com/items")
+
+    fetch("https://t.damoa.io:8092/site/1036")
       .then(res => res.json())
       .then(
         (result) => {
@@ -66,19 +67,25 @@ export default class Monitor extends React.Component {
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
         // exceptions from actual bugs in components.
+        /*
         (error) => {
           this.setState({
-            isLoaded: true,
+            isLoaded: false,
             error
           });
         }
+        */
       )
-      */
+      .catch((error) => {
+        this.setState({
+          isLoaded: false
+        })
+      })
+
   }
 
   render() {
     const { isLoaded, name, compType, siteData} = this.state;
-    /* Data part starts */
     
     const companyName = siteData.site_name;
     const companyId = 'ID '+ siteData.site;
@@ -94,7 +101,7 @@ export default class Monitor extends React.Component {
         />
       );
     }
-    // console.log("모니터")
+
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
@@ -128,6 +135,7 @@ export default class Monitor extends React.Component {
     );
   }
 }
+
 
 const styles = StyleSheet.create({
   container: {

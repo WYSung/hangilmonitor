@@ -8,12 +8,12 @@ import {
     Image,
     TouchableOpacity,
     Dimensions
-    } from 'react-native';
+} from 'react-native';
 
 
-// or any pure javascript modules available in npm
-//import { Card } from 'react-native-paper';
+
 const { width, height } = Dimensions.get('window');
+
 export default class WelcomeScreen extends React.Component {
   static navigationOptions = {
     title: '한길 하수처리 모니터링',
@@ -43,27 +43,6 @@ export default class WelcomeScreen extends React.Component {
   }   
 }
 
-/*
-export default class WelcomeScreen extends React.Component {
-  render() {
-    return(
-      <View style={styles.container}>
-        <Text>Welcome</Text>
-      </View>
-    );
-  }   
-}
-
-
-        <StatusBar 
-          BackgroundColor="1a3f95" 
-          barStyle="light-content" 
-          />
-        <TouchableOpacity onPress={() => this.props.navigtion.navigate('Login')}>
-            <Image style={{width:100, height:100}}
-              source= {require('../assets/sucatch.png')} />
-        </TouchableOpacity>
-*/
 
 const styles = StyleSheet.create({
     container: {

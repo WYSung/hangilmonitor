@@ -30,7 +30,7 @@ export default class Link extends Component {
     convertDateRange = () => {
         const one_day = this.state.one_day;
 
-        //TODO get new data
+        //TODO use AJAX or something to get new data
 
         if (one_day) {
             this.setState({ one_day: false, seven_day: true });
@@ -64,7 +64,7 @@ export default class Link extends Component {
         const componentName = `${compType} ${name}`;
 
         const {one_day, seven_day, selected} = this.state;
-        //console.log('Link Render' + companyId);
+
         return(
             <View style={styles.container}>
                 <StatusBar barStyle='light-content'></StatusBar>
