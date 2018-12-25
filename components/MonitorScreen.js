@@ -16,11 +16,6 @@ export default class Monitor extends React.Component {
     headerTintColor: '#fff',
   };
 
-
-  getData() {
-    return require('../assets/cards.json');
-  }
-
   /**
    * The constructor of the Monitor component.
    *
@@ -51,9 +46,9 @@ export default class Monitor extends React.Component {
   };
 
   /**
-   * 
+   * Get the data from the server via https protocol.
    */
-  componentDidMount() {
+  getData() {
 
     fetch("https://t.damoa.io:8092/site/1036")
       .then(res => res.json())
