@@ -1,5 +1,5 @@
 
-import React, {Component} from 'react';
+import React from 'react';
 import { 
     Text, 
     View, 
@@ -25,10 +25,8 @@ export default class LoginScreen extends React.Component {
   render() {
     const {navigate} = this.props.navigation;
     return(
-      <View style={styles.container}>       
-        <Image style={{width:width / 8, height:height / 10}}
-          source= {require('../assets/sucatch1.jpg')} />
-        <Text style={styles.logoText}>한길 하수처리 모니터링</Text>
+      <View style={styles.container}>
+        <Image style={styles.logoImage} source= {require('../assets/sucatch1.jpg')} />
         <TextInput style={styles.inputBox} 
         placeholder="Email"
         placeholderTextColor = "#1a3f95"
@@ -53,7 +51,7 @@ export default class LoginScreen extends React.Component {
         </View>
       </View>
     );
-  }   
+  }
 }
 
 const styles = StyleSheet.create({
@@ -63,11 +61,17 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center'
     },
+    logoImage: {
+      width: width / 5,
+      height: height / 6,
+      marginBottom: height / 10,
+      marginTop: height / 20
+    },
     signupTextCont: {
       flexGrow: 1,
       alignItems: 'center',
       justifyContent : 'flex-end',
-      paddingVertical: 16,
+      paddingVertical: 10,
       flexDirection: 'row'
     },
     signupText: {
@@ -79,32 +83,26 @@ const styles = StyleSheet.create({
       fontSize: width / 25,
       fontWeight: '500'
     },
-    logoText: {
-      marginVertical: height / 50,
-      fontSize: width / 20,
-      color:'#a8a9ad'
-    },
     inputBox: {
       width: width * 4/5,
-      height: height / 10,
+      height: height / 15,
       backgroundColor:'rgba(255,255,255,0.3)',
       borderRadius: 25,
       paddingHorizontal: 16,
-      paddingVertical: 10,
-      fontSize: width / 18,
+      fontSize: width / 25,
       color: '#ffffff',
-      marginVertical: 10
+      marginVertical: 5
     },
     buttonBox: {
       width: width * 4/5,
-      height: height / 10,
+      height: height / 15,
       backgroundColor: '#a8a9ad',
       borderRadius: 25,
       marginVertical: 10,
-      paddingVertical: 12
+      paddingVertical: 5
     },
     buttonText: {
-      fontSize : width / 18,
+      fontSize : width / 25,
       fontWeight: '500',
       color: "#ffffff",
       textAlign: 'center'
