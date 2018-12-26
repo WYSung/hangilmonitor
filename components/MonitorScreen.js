@@ -45,7 +45,6 @@ export default class Monitor extends React.Component {
       .then(res => res.json())
       .then(
         (result) => {
-          console.log(result)
           this.setState({
             isLoaded: true,
             siteData: result
@@ -59,7 +58,6 @@ export default class Monitor extends React.Component {
             isLoaded: false,
             error
           });
-          console.log('fml')
         }
       )
   }
