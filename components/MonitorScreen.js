@@ -16,121 +16,128 @@ export default class Monitor extends React.Component {
     headerTintColor: '#fff',
   };
 
-  /**
-   * The constructor of the Monitor component.
-   *
-   * @param {*} props 
-   */
+
+  /*
+  getData() {
+    return require('../assets/cards.json');
+  }
+  */
+
+
   constructor(props) {
     super(props);
-    const siteData = this.getData();
+    //const siteData = this.getData();
+
     this.state = {
-        isLoaded: false,
-        name: '',
-        compType: '',
-        companyName: '',
-        companyId: '',
-        siteData: siteData
+      isLoaded: false,
+      linkLoaded: false,
+      name: '',
+      compType: '',
+      siteData: undefined,
+      companyName: '',
+      companyId: ''
     };
+    this.getData()
   }
 
 
   changeLoadingStat = (newName, newType) => {
-    const load = this.state.isLoaded;
-    
+    const load = this.state.linkLoaded;
+
     if (load) {
-      this.setState({ isLoaded: false, name: newName, compType: newType });
+      this.setState({ linkLoaded: false, name: newName, compType: newType });
     } else {
-      this.setState({ isLoaded: true, name: newName, compType: newType });
+      this.setState({ linkLoaded: true, name: newName, compType: newType });
     }
   };
 
-  /**
-   * Get the data from the server via https protocol.
-   */
-  getData() {
-
-    {/* The fetch function provides the ajax functions */}
+  getData() { //componentDidMount
     fetch("https://t.damoa.io:8092/site/1036")
       .then(res => res.json())
       .then(
         (result) => {
+
+          console.log(result)
           this.setState({
+            isLoaded: true,
             siteData: result
           });
         },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
         // exceptions from actual bugs in components.
-        /*
         (error) => {
           this.setState({
             isLoaded: false,
             error
           });
+          console.log('fml')
         }
-        */
       )
-      .catch((error) => {
-        this.setState({
-          siteData: error
-        })
-      })
-
   }
 
   render() {
-    const { isLoaded, name, compType, siteData} = this.state;
-    
-    const companyName = siteData.site_name;
-    const companyId = 'ID '+ siteData.site;
+    const { isLoaded, linkLoaded, name, compType, siteData, company_name, company_id } = this.state;
+    /* Data part starts */
 
     if (isLoaded) {
+
+      const companyName = siteData['name']
+      const companyId = 'ID ' + siteData['id'];
+
+      if (linkLoaded) {
+        return (
+          <Link
+            name={name}
+            goBack={this.changeLoadingStat}
+            compType={compType}
+            companyId={companyId}
+            companyName={companyName}
+          />
+        );
+      }
+
       return (
-        <Link
-          name={name}
-          goBack={this.changeLoadingStat}
-          compType={compType}
-          companyId={companyId}
-          companyName={companyName}
-        />
+        <View style={styles.container}>
+          <StatusBar barStyle="light-content" />
+          <View style={styles.company}>
+            <Text style={styles.companyText}>{companyName}</Text>
+          </View>
+          <View style={styles.companyID}>
+            <Text style={styles.companyID_Text}>{companyId}</Text>
+          </View>
+          <Card
+            itemType={siteData['sensors'][0]['category']}
+            data={siteData['sensors'][0]['installed']}
+            goToLink={this.changeLoadingStat}
+          />
+          <Card
+            itemType={siteData['sensors'][1]['category']}
+            data={siteData['sensors'][1]['installed']}
+            goToLink={this.changeLoadingStat}
+          />
+          <Card
+            itemType={siteData['sensors'][2]['category']}
+            data={siteData['sensors'][2]['installed']}
+            goToLink={this.changeLoadingStat}
+          />
+          <Card
+            itemType={siteData['sensors'][3]['category']}
+            data={siteData['sensors'][3]['installed']}
+            goToLink={this.changeLoadingStat}
+          />
+        </View>
+      );
+      
+    } else {
+      return(
+        <View>
+          <Text>Please wait for few seconds.. </Text>
+        </View>
       );
     }
-
-    return (
-      <View style={styles.container}>
-        <StatusBar barStyle="light-content" />
-        <View style={styles.company}>
-          <Text style={styles.companyText}>{companyName}</Text>
-        </View>
-        <View style={styles.companyID}>
-          <Text style={styles.companyID_Text}>{companyId}</Text>
-        </View>
-        <Card
-          itemType={siteData['sensors']['typeA']['name']}
-          data={siteData['sensors']['typeA']['installed']}
-          goToLink={this.changeLoadingStat}
-        />
-        <Card
-          itemType={siteData['sensors']['typeB']['name']}
-          data={siteData['sensors']['typeB']['installed']}
-          goToLink={this.changeLoadingStat}
-        />
-        <Card
-          itemType={siteData['sensors']['typeC']['name']}
-          data={siteData['sensors']['typeC']['installed']}
-          goToLink={this.changeLoadingStat}
-        />
-        <Card
-          itemType={siteData['sensors']['typeD']['name']}
-          data={siteData['sensors']['typeD']['installed']}
-          goToLink={this.changeLoadingStat}
-        />
-      </View>
-    );
   }
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -163,4 +170,3 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
 });
-
