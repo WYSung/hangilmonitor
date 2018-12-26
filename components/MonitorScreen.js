@@ -17,25 +17,15 @@ export default class Monitor extends React.Component {
   };
 
 
-  /*
-  getData() {
-    return require('../assets/cards.json');
-  }
-  */
-
-
   constructor(props) {
     super(props);
-    //const siteData = this.getData();
 
     this.state = {
       isLoaded: false,
       linkLoaded: false,
       name: '',
       compType: '',
-      siteData: undefined,
-      companyName: '',
-      companyId: ''
+      siteData: undefined
     };
     this.getData()
   }
@@ -77,11 +67,9 @@ export default class Monitor extends React.Component {
   }
 
   render() {
-    const { isLoaded, linkLoaded, name, compType, siteData, company_name, company_id } = this.state;
-    /* Data part starts */
+    const { isLoaded, linkLoaded, name, compType, siteData } = this.state;
 
     if (isLoaded) {
-
       const companyName = siteData['name']
       const companyId = 'ID ' + siteData['id'];
 
@@ -128,7 +116,7 @@ export default class Monitor extends React.Component {
           />
         </View>
       );
-      
+
     } else {
       return(
         <View>
