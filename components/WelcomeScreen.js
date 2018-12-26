@@ -32,9 +32,9 @@ export default class WelcomeScreen extends React.Component {
           />
         <TouchableOpacity onPress={() => navigate('Login')}>
           <Image
-            resizeMode= 'containe'
+            resizeMode= 'contain'
             resizeMethod= 'auto'
-            style={{width:width,height:height-60}}
+            style={styles.welcomeScreenImage}
             source={require('../assets/sucatchCover.jpg')}
           />
         </TouchableOpacity>
@@ -51,4 +51,8 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center'
     },
+    welcomeScreenImage: {
+      width: width,
+      height: height - 70
+    }
 });

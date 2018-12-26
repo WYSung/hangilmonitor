@@ -126,7 +126,7 @@ export default class Link extends Component {
 const styles = StyleSheet.create({
     container: {
         flexGrow: 1,
-        flowDirection: 'column',
+        flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#1a3f95'

@@ -8,7 +8,7 @@ import {
     TouchableOpacity,
     Image,
     TextInput 
-    } from 'react-native';
+} from 'react-native';
 
 
 // or any pure javascript modules available in npm
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     signupTextCont: {
       flexGrow: 1,
       alignItems: 'center',
-      ustifyContent : 'flex-end',
+      justifyContent : 'flex-end',
       paddingVertical: 16,
       flexDirection: 'row'
     },

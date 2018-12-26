@@ -1,8 +1,9 @@
 {
-  "expoServerPort": null,
-  "packagerPort": null,
-  "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
+  "expoServerPort": 19000,
+  "packagerPort": 19001,
+  "packagerPid": 6114,
+  "expoServerNgrokUrl": "https://au-tm6.blackbeenie.hangilmonitor.exp.direct",
+  "packagerNgrokUrl": "https://packager.au-tm6.blackbeenie.hangilmonitor.exp.direct",
+  "ngrokPid": 6133,
+  "devToolsPort": 19002
 }

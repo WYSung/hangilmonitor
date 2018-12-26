@@ -6,8 +6,11 @@ import {
     StyleSheet,
     TouchableOpacity,
     TextInput,
-    Image
+    Image,
+    Dimensions
 } from 'react-native';
+
+const { width, height } = Dimensions.get('window');
 
 export default class LoginScreen extends React.Component {
 
@@ -23,7 +26,7 @@ export default class LoginScreen extends React.Component {
     const {navigate} = this.props.navigation;
     return(
       <View style={styles.container}>       
-        <Image style={{width:200, height:200}}
+        <Image style={{width:width / 8, height:height / 10}}
           source= {require('../assets/sucatch1.jpg')} />
         <Text style={styles.logoText}>한길 하수처리 모니터링</Text>
         <TextInput style={styles.inputBox} 
@@ -45,7 +48,7 @@ export default class LoginScreen extends React.Component {
         <View style={styles.signupTextCont}>
           <Text style={styles.signupText}> 등록 아이디가 없다면... </Text>
           <TouchableOpacity onPress={() => navigate('Signup')}>
-            <Text style={styles.signupButton}> 등록 </Text>
+            <Text style={styles.signupButton}> 회원가입 </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -63,43 +66,45 @@ const styles = StyleSheet.create({
     signupTextCont: {
       flexGrow: 1,
       alignItems: 'center',
-      ustifyContent : 'flex-end',
+      justifyContent : 'flex-end',
       paddingVertical: 16,
       flexDirection: 'row'
     },
     signupText: {
       color: 'rgba(255,255,255,0.7)',
-      fontSize: 16
+      fontSize: width / 25
     },
     signupButton: {
       color: "#ffffff",
-      fontSize: 16,
+      fontSize: width / 25,
       fontWeight: '500'
     },
     logoText: {
-      marginVertical: 15,
-      fontSize: 18,
+      marginVertical: height / 50,
+      fontSize: width / 20,
       color:'#a8a9ad'
     },
     inputBox: {
-      width: 300,
+      width: width * 4/5,
+      height: height / 10,
       backgroundColor:'rgba(255,255,255,0.3)',
       borderRadius: 25,
       paddingHorizontal: 16,
       paddingVertical: 10,
-      fontSize: 16,
+      fontSize: width / 18,
       color: '#ffffff',
       marginVertical: 10
     },
     buttonBox: {
-      width: 300,
+      width: width * 4/5,
+      height: height / 10,
       backgroundColor: '#a8a9ad',
       borderRadius: 25,
       marginVertical: 10,
       paddingVertical: 12
     },
     buttonText: {
-      fontSize : 16,
+      fontSize : width / 18,
       fontWeight: '500',
       color: "#ffffff",
       textAlign: 'center'

@@ -50,13 +50,13 @@ export default class Monitor extends React.Component {
    */
   getData() {
 
+    {/* The fetch function provides the ajax functions */}
     fetch("https://t.damoa.io:8092/site/1036")
       .then(res => res.json())
       .then(
         (result) => {
           this.setState({
-            isLoaded: true,
-            items: result.items
+            siteData: result
           });
         },
         // Note: it's important to handle errors here
@@ -73,7 +73,7 @@ export default class Monitor extends React.Component {
       )
       .catch((error) => {
         this.setState({
-          isLoaded: false
+          siteData: error
         })
       })
 
