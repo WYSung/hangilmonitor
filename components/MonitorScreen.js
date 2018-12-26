@@ -27,7 +27,6 @@ export default class Monitor extends React.Component {
       compType: '',
       siteData: undefined
     };
-    this.getData()
   }
 
 
@@ -41,12 +40,11 @@ export default class Monitor extends React.Component {
     }
   };
 
-  getData() { //componentDidMount
+  componentDidMount() {
     fetch("https://t.damoa.io:8092/site/1036")
       .then(res => res.json())
       .then(
         (result) => {
-
           console.log(result)
           this.setState({
             isLoaded: true,
