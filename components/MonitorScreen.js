@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, Dimensions, StatusBar } from 'react-native';
 
 import Card from './Card';
-import Link from './LinkScreen';
 
 const { width, height } = Dimensions.get('window');
 
 
-export default class Monitor extends React.Component {
+export default class Monitor extends Component {
 
   /* Make the navigation header invisible. */
   static navigationOptions = {

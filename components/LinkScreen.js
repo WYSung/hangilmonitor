@@ -127,17 +127,16 @@ const styles = StyleSheet.create({
     },
     companyName: {
         color: 'white',
-        fontSize: 24,
+        fontSize: width / 15,
         fontWeight: 'bold',
         marginLeft: width / 20,
-        paddingTop: 10
+        paddingTop: height / 40
     },
     companyID: {
         color: 'white',
-        fontSize: 18,
+        fontSize: width / 20,
         marginLeft: width / 20,
-        paddingTop: 10,
-        paddingBottom: 10
+        paddingVertical: height / 40
     },
     componentView: {
         width: width,
@@ -145,26 +144,26 @@ const styles = StyleSheet.create({
     },
     componentName: {
         color: '#0bb7b4',
-        fontSize: 18,
+        fontSize: width / 20,
         marginLeft: width / 20,
         paddingTop: 10
     },
     dateRangePicker: {
         width: width,
         backgroundColor: '#1a3f95',
-        fontSize : 18,
-        paddingBottom: 10,
+        fontSize : width / 25,
+        paddingVertical: height / 60,
         flexDirection: 'row',
         alignItems: 'center'
     },
     date_highlighted: {
         color: '#0bb7b4',
-        fontSize : 18,
+        fontSize : width / 25,
         marginLeft: width / 20
     },
     date_normal: {
         color: 'grey',
-        fontSize : 18,
+        fontSize : width / 25,
         marginLeft: width / 20
     },
     oneDayContainer: {
@@ -194,7 +193,7 @@ const styles = StyleSheet.create({
         borderRadius: 13
     },
     dataButtonText: {
-        fontSize: 18,
+        fontSize: width / 25,
         color: 'grey'
     },
     dataButton_selected: {
@@ -207,7 +206,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#0bb7b4'
     },
     dataButtonText_selected: {
-        fontSize: 20,
+        fontSize: width / 20,
         color: 'white'
     }
 });
