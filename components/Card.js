@@ -137,6 +137,7 @@ const styles = StyleSheet.create({
     color: "white"
   },
   items: {
-    flexDirection: "row"
+    flexDirection: "row",
+    height: height / 8,
   }
 });

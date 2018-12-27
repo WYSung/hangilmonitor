@@ -60,12 +60,12 @@ export default class Item extends Component {
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
-        backgroundColor: "#1a3f95"
+        backgroundColor: "#1a3f95",
     },
     item: {
         flexDirection: 'row',
-        paddingTop: height / 30,
-        paddingLeft: 5 // height/80
+        paddingTop: height / 50,
+        paddingLeft: height / 80
     },
     linkButton: {
         width: width / 6,
@@ -77,13 +77,12 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     linkText: {
-        paddingTop: 5,  // how to avoid hard coding??
         color: "#1a3f95",
-        fontSize: 12
+        fontSize: width / 20
     },
     nameText: {
         color: 'white',
-        fontSize: 14,
+        fontSize: width / 20,
         paddingRight: width / 100
     },
     singleColumnContainer: {

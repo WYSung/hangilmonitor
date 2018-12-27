@@ -69,7 +69,7 @@ export default class Monitor extends Component {
   }
 
   render() {
-    const { isLoaded, companyId, companyName, siteData } = this.state;
+    const { isLoaded, companyID, companyName, siteData } = this.state;
 
     if (isLoaded) {
 
@@ -80,7 +80,7 @@ export default class Monitor extends Component {
             <Text style={styles.companyText}>{companyName}</Text>
           </View>
           <View style={styles.companyID}>
-            <Text style={styles.companyID_Text}>{companyId}</Text>
+            <Text style={styles.companyID_Text}>{companyID}</Text>
           </View>
           <Card
             itemType={siteData['sensors'][0]['category']}
