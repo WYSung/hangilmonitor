@@ -8,12 +8,10 @@ const { width, height } = Dimensions.get('window');
 
 
 export default class Monitor extends React.Component {
+
+  /* Make the navigation header invisible. */
   static navigationOptions = {
-    title: '한길하수처리모니터링',
-    headerStyle: {
-      backgroundColor: '#1a3f95',
-    },
-    headerTintColor: '#fff',
+    header: null
   };
 
 
@@ -30,15 +28,12 @@ export default class Monitor extends React.Component {
   }
 
 
-  changeLoadingStat = (newName, newType) => {
-    const load = this.state.linkLoaded;
-
-    if (load) {
-      this.setState({ linkLoaded: false, name: newName, compType: newType });
-    } else {
-      this.setState({ linkLoaded: true, name: newName, compType: newType });
-    }
-  };
+  changeLoadingStat = (name, type) => {
+    this.props.navigation.navigate('Link', {
+      name: name,
+      compType: type,
+    });
+  }
 
   componentDidMount() {
     fetch("https://t.damoa.io:8092/site/1036")
@@ -70,15 +65,24 @@ export default class Monitor extends React.Component {
       const companyId = 'ID ' + siteData['id'];
 
       if (linkLoaded) {
+        /*
         return (
           <Link
             name={name}
             goBack={this.changeLoadingStat}
             compType={compType}
-            companyId={companyId}
+            companyID={companyId}
             companyName={companyName}
           />
         );
+        */
+        () => navigate('Link', { 
+          name: name, 
+          goBack: this.changeLoadingStat, 
+          compType: compType, 
+          companyID: companyId,
+          companyName: companyName
+         });
       }
 
       return (
@@ -133,12 +137,12 @@ const styles = StyleSheet.create({
   company: {
     backgroundColor: '#1a3f95',
     width: width,
-    paddingBottom: 10,
-    marginTop: 20,
+    paddingVertical: height / 40,
+    marginTop: height / 20,
   },
   companyText: {
     color: '#ffffff',
-    fontSize: 18,
+    fontSize: width / 15,
     paddingLeft: 15,
   },
   companyID: {
@@ -149,7 +153,7 @@ const styles = StyleSheet.create({
   },
   companyID_Text: {
     color: '#ffffff',
-    fontSize: 14,
+    fontSize: width / 20,
     paddingLeft: 15,
     paddingBottom: 10,
   },

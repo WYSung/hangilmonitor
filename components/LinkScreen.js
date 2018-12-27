@@ -14,8 +14,6 @@ import PropTypes from 'prop-types';
 
 const { width, height } = Dimensions.get('window');
 
-//const BACKBUTTON = require('../assets/goBack.png');
-
 export default class Link extends Component {
     constructor(props) {
         super(props);
@@ -46,9 +44,6 @@ export default class Link extends Component {
     static propTypes = {
         name: PropTypes.string.isRequired,
         compType: PropTypes.string.isRequired,
-        goBack: PropTypes.func.isRequired,
-        companyID: PropTypes.string.isRequired,
-        companyName: PropTypes.string.isRequired
     }
 
     static navigationOptions = {
@@ -60,7 +55,7 @@ export default class Link extends Component {
     };
 
     render() {
-        const {name, goBack, compType, companyId, companyName} = this.props;
+        const {name, compType,} = this.props;
         const componentName = `${compType} ${name}`;
 
         const {one_day, seven_day, selected} = this.state;
@@ -68,10 +63,6 @@ export default class Link extends Component {
         return(
             <View style={styles.container}>
                 <StatusBar barStyle='light-content'></StatusBar>
-                <View style={styles.companyInfo}>
-                    <Text style={styles.companyName}>{companyName}</Text>
-                    <Text style={styles.companyID}>{companyId}</Text>
-                </View>
                 <View style={styles.componentView}>
                     <Text style={styles.componentName}>{componentName}</Text>
                 </View>
@@ -130,24 +121,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#1a3f95'
-    },
-    companyInfo: {
-        width: width,
-        backgroundColor: '#1a3f95',
-    },
-    companyName: {
-        color: 'white',
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginLeft: width / 20,
-        paddingTop: 10
-    },
-    companyID: {
-        color: 'white',
-        fontSize: 18,
-        marginLeft: width / 20,
-        paddingTop: 10,
-        paddingBottom: 10
     },
     componentView: {
         width: width,

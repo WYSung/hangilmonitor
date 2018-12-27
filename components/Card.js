@@ -19,12 +19,15 @@ export default class Card extends Component {
 
   static propTypes = {
     itemType: PropTypes.string.isRequired,
-    data: PropTypes.object.isRequired,
+    data: PropTypes.array.isRequired,
     goToLink: PropTypes.func.isRequired
   };
 
   render() {
     const type = this.props.itemType;
+    const data = this.props.data;
+    const goToLink = this.props.goToLink;
+
     let img =
       type === "브로워"
         ? BLOWER
@@ -33,57 +36,55 @@ export default class Card extends Component {
           : type === "휀"
             ? FAN
             : FLOW;
-    //console.log("카드 렌더링")
-    const array = this.props.data;
-    //const operation = data.operation;
-    const operation = '정상';
-    //const array = data.arr;
-    const goToLink = this.props.goToLink;
 
     const view =
-      array.length > 2 ? (
-        <View>
-          {array.length != 3 ? (
-            <View style={styles.items}>
-              <Item
-                itemList={[array[0], array[1]]}
-                columnNum={2}
-                onPress={goToLink}
-                type={type}
-              />
-              <Item
-                itemList={[array[2], array[3]]}
-                columnNum={2}
-                onPress={goToLink}
-                type={type}
-              />
-            </View>
-          ) : (
-            <View style={styles.items}>
-              <Item
-                itemList={[array[0], array[1]]}
-                columnNum={2}
-                onPress={goToLink}
-                type={type}
-              />
-              <Item
-                itemList={[array[2]]}
-                columnNum={2}
-                onPress={goToLink}
-                type={type}
-              />
-            </View>
-          )}
-        </View>
+      data != undefined ? (
+        data.length > 2 ? (
+          <View>
+            {data.length != 3 ? (
+              <View style={styles.items}>
+                <Item
+                  itemList={[data[0], data[1]]}
+                  columnNum={2}
+                  onPress={goToLink}
+                  type={type}
+                />
+                <Item
+                  itemList={[data[2], data[3]]}
+                  columnNum={2}
+                  onPress={goToLink}
+                  type={type}
+                />
+              </View>
+            ) : (
+              <View style={styles.items}>
+                <Item
+                  itemList={[data[0], data[1]]}
+                  columnNum={2}
+                  onPress={goToLink}
+                  type={type}
+                />
+                <Item
+                  itemList={[data[2]]}
+                  columnNum={2}
+                  onPress={goToLink}
+                  type={type}
+                />
+              </View>
+            )}
+          </View>
+        ) : (
+          <View style={styles.items}>
+            <Item
+              itemList={data}
+              columnNum={type === "휀" ? 0 : 1}
+              onPress={goToLink}
+              type={type}
+            />
+          </View>
+        )
       ) : (
-        <View style={styles.items}>
-          <Item
-            itemList={array}
-            columnNum={type === "휀" ? 0 : 1}
-            onPress={goToLink}
-            type={type}
-          />
-        </View>
+        undefined
       );
 
     return (
@@ -99,7 +100,6 @@ export default class Card extends Component {
     );
   }
 }
-//<Text style={styles.workingStat}>{operation}</Text>
 
 const styles = StyleSheet.create({
   container: {
@@ -115,24 +115,25 @@ const styles = StyleSheet.create({
     paddingRight: 10,
   },
   imgContainer: {
-    paddingTop: 15,
+    paddingTop: 10,
     width: height / 8,
     height: height / 8
   },
   img: {
     width: height / 8,
     height: height / 8,
-    borderRadius: height/16,
+    borderRadius: height / 16,
   },
   name: {
     backgroundColor: "#1a3f95",
- //   width: height / 6,
+    width: width / 4,
     height: height / 8,
     paddingLeft: 10,
     paddingTop: 15
   },
   nameText: {
-    fontSize: 16,
+    fontSize: width / 20,
+    width: width / 4,
     color: "white"
   },
   items: {

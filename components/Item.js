@@ -33,14 +33,14 @@ export default class Item extends Component {
     }
 
     render() {
-        const {itemList, columnNum, pressed, typeOfComp} = this.props;
+        const {itemList, columnNum, onPressed, type} = this.props;
 
         let items = itemList.map(item => {
             return (
                 <View style={styles.item} key={uuidv1()}>
-                    <Text style={styles.nameText}>{item[0]}</Text>
-                    <TouchableOpacity style={styles.linkButton} onPress={() => this.changePage(item[0])}>
-                        <Text style={styles.linkText}>{item[2]}</Text>
+                    <Text style={styles.nameText}>{item.name}</Text>
+                    <TouchableOpacity style={styles.linkButton} onPress={() => this.changePage(item.name)}>
+                        <Text style={styles.linkText}>{item.status}</Text>
                     </TouchableOpacity>
                 </View>
             );
