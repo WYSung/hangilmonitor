@@ -20,29 +20,41 @@ export default class Monitor extends React.Component {
 
     this.state = {
       isLoaded: false,
-      linkLoaded: false,
-      name: '',
-      compType: '',
+      companyID: '',
+      companyName: '',
       siteData: undefined
     };
   }
 
 
   changeLoadingStat = (name, type) => {
+    const companyID = this.state.companyID;
+    const companyName = this.state.companyName;
+
     this.props.navigation.navigate('Link', {
       name: name,
       compType: type,
+      companyID: companyID,
+      companyName: companyName
     });
   }
 
+  /**
+   * Get the data by using https protocol when the component is mounted.
+   */
   componentDidMount() {
     fetch("https://t.damoa.io:8092/site/1036")
       .then(res => res.json())
       .then(
         (result) => {
+          const companyName = result['name'];
+          const companyId = 'ID ' + result['id'];
+
           this.setState({
             isLoaded: true,
-            siteData: result
+            siteData: result,
+            companyName: companyName,
+            companyID: companyId
           });
         },
         // Note: it's important to handle errors here
@@ -58,32 +70,9 @@ export default class Monitor extends React.Component {
   }
 
   render() {
-    const { isLoaded, linkLoaded, name, compType, siteData } = this.state;
+    const { isLoaded, companyId, companyName, siteData } = this.state;
 
     if (isLoaded) {
-      const companyName = siteData['name']
-      const companyId = 'ID ' + siteData['id'];
-
-      if (linkLoaded) {
-        /*
-        return (
-          <Link
-            name={name}
-            goBack={this.changeLoadingStat}
-            compType={compType}
-            companyID={companyId}
-            companyName={companyName}
-          />
-        );
-        */
-        () => navigate('Link', { 
-          name: name, 
-          goBack: this.changeLoadingStat, 
-          compType: compType, 
-          companyID: companyId,
-          companyName: companyName
-         });
-      }
 
       return (
         <View style={styles.container}>

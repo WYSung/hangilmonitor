@@ -6,11 +6,8 @@ import {
     Dimensions,
     StatusBar,
     TouchableOpacity,
-    Image,
     WebView
 } from 'react-native';
-
-import PropTypes from 'prop-types';
 
 const { width, height } = Dimensions.get('window');
 
@@ -52,6 +49,8 @@ export default class Link extends Component {
     render() {
         const name = this.props.navigation.getParam('name', undefined);
         const compType = this.props.navigation.getParam('compType', undefined);
+        const companyId = this.props.navigation.getParam('companyID', undefined);
+        const companyName = this.props.navigation.getParam('companyName', undefined);
         const componentName = `${compType} ${name}`;
 
         const {one_day, seven_day, selected} = this.state;
@@ -59,6 +58,10 @@ export default class Link extends Component {
         return(
             <View style={styles.container}>
                 <StatusBar barStyle='light-content'></StatusBar>
+                <View style={styles.companyInfo}>
+                    <Text style={styles.companyName}>{companyName}</Text>
+                    <Text style={styles.companyID}>{companyId}</Text>
+                </View>
                 <View style={styles.componentView}>
                     <Text style={styles.componentName}>{componentName}</Text>
                 </View>
@@ -117,6 +120,24 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#1a3f95'
+    },
+    companyInfo: {
+        width: width,
+        backgroundColor: '#1a3f95',
+    },
+    companyName: {
+        color: 'white',
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginLeft: width / 20,
+        paddingTop: 10
+    },
+    companyID: {
+        color: 'white',
+        fontSize: 18,
+        marginLeft: width / 20,
+        paddingTop: 10,
+        paddingBottom: 10
     },
     componentView: {
         width: width,
