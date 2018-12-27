@@ -19,7 +19,7 @@ export default class Signup extends React.Component {
   static navigationOptions = {
     title: '한길하수처리모니터링',
     headerStyle: {
-    backgroundColor: '#1a3f95',
+      backgroundColor: '#1a3f95',
     },
     headerTintColor: '#fff',
   };

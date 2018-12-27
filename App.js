@@ -12,7 +12,7 @@ import Link from './components/LinkScreen'
 const AppStackNavigator = createStackNavigator({
   Welcome: {screen: WelcomeScreen},
   Monitor: {screen: Monitor},
-  Link: {screen: Link},
+  Link: { screen: Link},
   Login: {screen: LoginScreen},
   Signup: {screen: Signup},
 });
