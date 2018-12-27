@@ -41,11 +41,6 @@ export default class Link extends Component {
         this.setState({selected: newValue});
     }
 
-    static propTypes = {
-        name: PropTypes.string.isRequired,
-        compType: PropTypes.string.isRequired,
-    }
-
     static navigationOptions = {
       title: '한길하수처리모니터링',
       headerStyle: {
@@ -55,7 +50,8 @@ export default class Link extends Component {
     };
 
     render() {
-        const {name, compType,} = this.props;
+        const name = this.props.navigation.getParam('name', undefined);
+        const compType = this.props.navigation.getParam('compType', undefined);
         const componentName = `${compType} ${name}`;
 
         const {one_day, seven_day, selected} = this.state;
