@@ -27,7 +27,7 @@ export default class Monitor extends React.Component {
   }
 
 
-  changeLoadingStat = (name, type) => {
+  navigateToLinkScreen = (name, type) => {
     const companyID = this.state.companyID;
     const companyName = this.state.companyName;
 
@@ -86,22 +86,22 @@ export default class Monitor extends React.Component {
           <Card
             itemType={siteData['sensors'][0]['category']}
             data={siteData['sensors'][0]['installed']}
-            goToLink={this.changeLoadingStat}
+            goToLink={this.navigateToLinkScreen}
           />
           <Card
             itemType={siteData['sensors'][1]['category']}
             data={siteData['sensors'][1]['installed']}
-            goToLink={this.changeLoadingStat}
+            goToLink={this.navigateToLinkScreen}
           />
           <Card
             itemType={siteData['sensors'][2]['category']}
             data={siteData['sensors'][2]['installed']}
-            goToLink={this.changeLoadingStat}
+            goToLink={this.navigateToLinkScreen}
           />
           <Card
             itemType={siteData['sensors'][3]['category']}
             data={siteData['sensors'][3]['installed']}
-            goToLink={this.changeLoadingStat}
+            goToLink={this.navigateToLinkScreen}
           />
         </View>
       );
