@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Dimensions, StatusBar } from 'react-native';
+import uuidv1 from 'uuid/v1';
 
 import Card from './Card';
 
@@ -73,6 +74,19 @@ export default class Monitor extends Component {
 
     if (isLoaded) {
 
+      let cards = siteData['sensors'].map(sensor => {
+        if (sensor.installed.length > 0) {
+          return (
+            <Card
+              itemType={sensor['category']}
+              data={sensor['installed']}
+              goToLink={this.navigateToLinkScreen} 
+              key={uuidv1()}
+            />
+          );
+        }
+      });
+
       return (
         <View style={styles.container}>
           <StatusBar barStyle="light-content" />
@@ -82,26 +96,7 @@ export default class Monitor extends Component {
           <View style={styles.companyID}>
             <Text style={styles.companyID_Text}>{companyID}</Text>
           </View>
-          <Card
-            itemType={siteData['sensors'][0]['category']}
-            data={siteData['sensors'][0]['installed']}
-            goToLink={this.navigateToLinkScreen}
-          />
-          <Card
-            itemType={siteData['sensors'][1]['category']}
-            data={siteData['sensors'][1]['installed']}
-            goToLink={this.navigateToLinkScreen}
-          />
-          <Card
-            itemType={siteData['sensors'][2]['category']}
-            data={siteData['sensors'][2]['installed']}
-            goToLink={this.navigateToLinkScreen}
-          />
-          <Card
-            itemType={siteData['sensors'][3]['category']}
-            data={siteData['sensors'][3]['installed']}
-            goToLink={this.navigateToLinkScreen}
-          />
+          {cards}
         </View>
       );
 
