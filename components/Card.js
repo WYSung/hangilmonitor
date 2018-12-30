@@ -28,6 +28,8 @@ export default class Card extends Component {
     const data = this.props.data;
     const goToLink = this.props.goToLink;
 
+    let numOfItems = ((data.length % 2 === 0) ? data.length / 2 : (data.length / 2) + 1);
+
     let img =
       type === "브로워"
         ? BLOWER
@@ -37,83 +39,42 @@ export default class Card extends Component {
             ? FAN
             : FLOW;
 
-    const view =
-      data != undefined ? (
-        data.length > 2 ? (
-          <View>
-            {data.length != 3 ? (
-              <View style={styles.items}>
-                <Item
-                  itemList={[data[0], data[1]]}
-                  columnNum={2}
-                  onPress={goToLink}
-                  type={type}
-                />
-                <Item
-                  itemList={[data[2], data[3]]}
-                  columnNum={2}
-                  onPress={goToLink}
-                  type={type}
-                />
-              </View>
-            ) : (
-              <View style={styles.items}>
-                <Item
-                  itemList={[data[0], data[1]]}
-                  columnNum={2}
-                  onPress={goToLink}
-                  type={type}
-                />
-                <Item
-                  itemList={[data[2]]}
-                  columnNum={2}
-                  onPress={goToLink}
-                  type={type}
-                />
-              </View>
-            )}
-          </View>
-        ) : (
-          <View style={styles.items}>
-            <Item
-              itemList={data}
-              columnNum={type === "휀" ? 0 : 1}
-              onPress={goToLink}
-              type={type}
-            />
-          </View>
-        )
-      ) : (
-        undefined
-      );
 
     return (
-      <View style={styles.container}>
+      <View style={{
+        backgroundColor: "#1a3f95",
+        width: width,
+        height: height * numOfItems / 6,
+        borderBottomColor: "#bbbbbb",
+        borderBottomWidth: 0.5,
+        flexDirection: "row",
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+        paddingLeft: 10,
+        paddingRight: 10,
+      }}>
         <View style={styles.imgContainer}>
           <Image source={img} style={styles.img} />
         </View>
         <View style={styles.name}>
           <Text style={styles.nameText}>{type}</Text>
         </View>
-        {view}
+        <View>
+          <View style={styles.items}>
+            <Item
+              itemList={data}
+              columnNum={2}
+              onPress={goToLink}
+              type={type}
+            />
+          </View>
+        </View>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#1a3f95",
-    width: width,
-    height: height / 6,
-    borderBottomColor: "#bbbbbb",
-    borderBottomWidth: 0.5,
-    flexDirection: "row",
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    paddingLeft: 10,
-    paddingRight: 10,
-  },
   imgContainer: {
     paddingTop: 10,
     width: height / 8,

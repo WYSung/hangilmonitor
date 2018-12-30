@@ -68,7 +68,7 @@ export default class Monitor extends Component {
         }
       )
   }
-
+ 
   render() {
     const { isLoaded, companyID, companyName, siteData } = this.state;
 
