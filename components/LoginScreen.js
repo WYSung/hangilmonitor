@@ -28,7 +28,6 @@ export default class LoginScreen extends React.Component {
     password: undefined
   }
 
-
   storeID = async () => {
     try {
       const email = this.state.email;
