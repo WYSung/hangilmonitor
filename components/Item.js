@@ -20,7 +20,6 @@ export default class Item extends Component {
 
     static propTypes = {
         itemList: PropTypes.array.isRequired,
-        columnNum: PropTypes.number.isRequired,
         onPress: PropTypes.func.isRequired,
         type: PropTypes.string.isRequired
     }
@@ -33,7 +32,7 @@ export default class Item extends Component {
     }
 
     render() {
-        const {itemList, columnNum, onPressed, type} = this.props;
+        const itemList = this.props.itemList;
 
         let items = itemList.map(item => {
             return (
@@ -47,10 +46,7 @@ export default class Item extends Component {
         });
 
         return (
-            <View style={(columnNum == 2) ? 
-                styles.container : (
-                    (columnNum != 0) ? styles.singleColumnContainer : styles.fanItemContainer
-                )}>
+            <View style={styles.container}>
                 {items}
             </View>
         );
@@ -84,15 +80,5 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: width / 20,
         paddingRight: width / 100
-    },
-    singleColumnContainer: {
-        alignItems: 'flex-end',
-        backgroundColor: "#1a3f95",
-        paddingLeft: (width / 6 + height / 95)
-    },
-    fanItemContainer: {
-        alignItems: 'flex-end',
-        backgroundColor: "#1a3f95",
-        paddingLeft: (width / 6 + height / 95)
     }
 });
