@@ -7,7 +7,8 @@ import {
     StatusBar,
     Image,
     TouchableOpacity,
-    Dimensions
+    Dimensions,
+    AsyncStorage
 } from 'react-native';
 
 
@@ -22,6 +23,18 @@ export default class WelcomeScreen extends React.Component {
     },
     headerTintColor: '#fff',
   };
+
+  checkAutoLogIn = async () => {
+    const email = await AsyncStorage.getItem('email');
+    const navigate = this.props.navigation.navigate;
+
+    if (email) {
+      navigate('Monitor');
+    } else {
+      navigate('Login');
+    }
+  }
+
   render() {
     const {navigate} = this.props.navigation;
     return(
@@ -30,7 +43,7 @@ export default class WelcomeScreen extends React.Component {
           BackgroundColor="1a3f95" 
           barStyle="light-content" 
           />
-        <TouchableOpacity onPress={() => navigate('Login')}>
+        <TouchableOpacity onPress={() => this.checkAutoLogIn()}>
           <Image
             resizeMode= 'contain'
             resizeMethod= 'auto'

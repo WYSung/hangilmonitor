@@ -7,7 +7,8 @@ import {
     TouchableOpacity,
     TextInput,
     Image,
-    Dimensions
+    Dimensions,
+    AsyncStorage
 } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
@@ -22,8 +23,37 @@ export default class LoginScreen extends React.Component {
     headerTintColor: '#fff',
   };
 
+  state = {
+    email: undefined,
+    password: undefined
+  }
+
+
+  storeID = async () => {
+    try {
+      const email = this.state.email;
+
+      await AsyncStorage.setItem('email', email);
+
+      await AsyncStorage.removeItem('email');
+
+      this.props.navigation.navigate('Monitor');
+
+    } catch {
+      alert('failed to store email');
+    }
+  }
+
+  handleEmail = (email) => {
+    this.setState({email: email});
+  }
+
+  handlePassword = (pw) => {
+    this.setState({password: pw});
+  }
+
   render() {
-    const {navigate} = this.props.navigation;
+
     return(
       <View style={styles.container}>
         <Image style={styles.logoImage} source= {require('../assets/sucatch1.jpg')} />
@@ -32,20 +62,22 @@ export default class LoginScreen extends React.Component {
         placeholderTextColor = "#1a3f95"
         selectionColor="#fff"
         keyboardType="email-address"
+        onChangeText={this.handleEmail}
         onSubmitEditing={()=> this.password.focus()}
         />
         <TextInput style={styles.inputBox} 
         placeholder="Password"
         secureTextEntry={true}
         placeholderTextColor = "#1a3f95"
+        onChangeText={this.handlePassword}
         ref={(input) => this.password = input}
         />
-        <TouchableOpacity style={styles.buttonBox} onPress={() => navigate('Monitor')}>
+        <TouchableOpacity style={styles.buttonBox} onPress={() => this.storeID()}>
           <Text style={styles.buttonText}>"Login"</Text>
         </TouchableOpacity>
         <View style={styles.signupTextCont}>
           <Text style={styles.signupText}> 등록 아이디가 없다면... </Text>
-          <TouchableOpacity onPress={() => navigate('Signup')}>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('Signup')}>
             <Text style={styles.signupButton}> 회원가입 </Text>
           </TouchableOpacity>
         </View>
