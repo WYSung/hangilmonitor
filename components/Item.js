@@ -37,10 +37,23 @@ export default class Item extends Component {
         let items = itemList.map(item => {
             return (
                 <View style={styles.item} key={uuidv1()}>
-                    <Text style={styles.nameText}>{item.name}</Text>
-                    <TouchableOpacity style={styles.linkButton} onPress={() => this.changePage(item.name)}>
-                        <Text style={styles.linkText}>{item.status}</Text>
-                    </TouchableOpacity>
+                    <Text style={styles.itemID}>{'ID ' + item.id}</Text>
+                    <View style={styles.linkButtonContainer}>
+                        <Text style={styles.nameText}>{item.name}</Text>
+                        <TouchableOpacity 
+                            style={{
+                                width: width / 7,
+                                height: width / 13,
+                                backgroundColor: (item.color === 'normal' ? 'green' : 'red'), //'#a8a9ad'
+                                borderColor: '#1a3f95',
+                                borderWidth: 0.7,
+                                borderRadius: 13,
+                                alignItems: 'center'
+                            }} 
+                            onPress={() => this.changePage(item.name)}>
+                            <Text style={styles.linkText}>{item.status}</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             );
         });
@@ -55,16 +68,28 @@ export default class Item extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        alignItems: 'center',
         backgroundColor: "#1a3f95",
+        height: height / 8,
+        width: width / 7 * 5 // width - (height / 8) - (width / 20),
     },
     item: {
         flexDirection: 'row',
         paddingTop: height / 50,
-        paddingLeft: height / 80
+        paddingLeft: width / 30,
+        justifyContent: 'space-around'
+    },
+    itemID: {
+        color: "#ffffff",
+        fontSize: width / 20,
+        marginRight: width / 30,
+        textAlign: 'left'
+    },
+    linkButtonContainer: {
+        flexDirection: 'row',
+        marginRight: width / 20
     },
     linkButton: {
-        width: width / 6,
+        width: width / 7,
         height: width / 13,
         backgroundColor: '#a8a9ad',
         borderColor: '#1a3f95',

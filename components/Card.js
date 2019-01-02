@@ -56,19 +56,12 @@ export default class Card extends Component {
         <View style={styles.imgContainer}>
           <Image source={img} style={styles.img} />
         </View>
-        <View style={styles.name}>
-          <Text style={styles.nameText}>{type}</Text>
-        </View>
-        <View>
-          <View style={styles.items}>
-            <Item
-              itemList={data}
-              columnNum={2}
-              onPress={goToLink}
-              type={type}
-            />
-          </View>
-        </View>
+        <Item
+          itemList={data}
+          columnNum={2}
+          onPress={goToLink}
+          type={type}
+        />
       </View>
     );
   }
@@ -84,21 +77,5 @@ const styles = StyleSheet.create({
     width: height / 8,
     height: height / 8,
     borderRadius: height / 16,
-  },
-  name: {
-    backgroundColor: "#1a3f95",
-    width: width / 4,
-    height: height / 8,
-    paddingLeft: 10,
-    paddingTop: 15
-  },
-  nameText: {
-    fontSize: width / 20,
-    width: width / 4,
-    color: "white"
-  },
-  items: {
-    flexDirection: "row",
-    height: height / 8,
   }
 });
