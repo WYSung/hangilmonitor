@@ -25,11 +25,12 @@ export default class WelcomeScreen extends React.Component {
   };
 
   checkAutoLogIn = async () => {
-    const email = await AsyncStorage.getItem('email');
+    const id = await AsyncStorage.getItem('id');
+    const pw = await AsyncStorage.getItem('pw');
     const navigate = this.props.navigation.navigate;
 
-    if (email) {
-      navigate('Monitor');
+    if (id) {
+      navigate('Monitor', {id: id, pw: pw});
     } else {
       navigate('Login');
     }

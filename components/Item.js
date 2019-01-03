@@ -45,7 +45,7 @@ export default class Item extends Component {
                             style={{
                                 width: width / 7,
                                 height: width / 13,
-                                backgroundColor: (item.color === 'normal' ? 'green' : 'red'), //'#a8a9ad'
+                                backgroundColor: (item.color === 'normal' ? '#a8a9ad' : 'red'),
                                 borderColor: '#1a3f95',
                                 borderWidth: 0.7,
                                 borderRadius: 13,

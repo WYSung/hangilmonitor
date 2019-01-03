@@ -15,12 +15,6 @@ export default class Link extends Component {
         super(props);
     }
 
-    state = {
-        one_day: true,
-        seven_day: false,
-        selected: 1
-    }
-
 
     /**
      * Set the size of the navigation header with suitable height and suitable font size.

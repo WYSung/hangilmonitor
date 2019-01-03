@@ -22,7 +22,7 @@ export default class Monitor extends Component {
       isLoaded: false,
       companyID: '',
       companyName: '',
-      siteData: undefined
+      siteData: undefined,
     };
   }
 
@@ -50,7 +50,15 @@ export default class Monitor extends Component {
    * Get the data by using https protocol when the component is mounted.
    */
   componentDidMount() {
-    fetch("https://t.damoa.io:8092/site/1049/1004")
+
+    const id = this.props.navigation.getParam('id', '0000');
+    const pw = this.props.navigation.getParam('pw', '1004');
+
+    const temp_url = 'https://t.damoa.io:8092/site/' + id + '/' + pw;
+
+    console.log(temp_url);
+
+    fetch(temp_url)
       .then(res => res.json())
       .then(
         (result) => {

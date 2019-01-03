@@ -24,27 +24,31 @@ export default class LoginScreen extends React.Component {
   };
 
   state = {
-    email: undefined,
+    id: undefined,
     password: undefined
   }
 
   storeID = async () => {
     try {
-      const email = this.state.email;
+      const {id, password} = this.state;
 
-      await AsyncStorage.setItem('email', email);
+      await AsyncStorage.setItem('id', id);
 
-      await AsyncStorage.removeItem('email');
+      await AsyncStorage.removeItem('id');
 
-      this.props.navigation.navigate('Monitor');
+      await AsyncStorage.setItem('pw', password);
+
+      await AsyncStorage.removeItem('pw');
+
+      this.props.navigation.navigate('Monitor', {id: id, pw: password});
 
     } catch {
-      alert('failed to store email');
+      alert('failed to store id');
     }
   }
 
-  handleEmail = (email) => {
-    this.setState({email: email});
+  handleID = (id) => {
+    this.setState({id: id});
   }
 
   handlePassword = (pw) => {
@@ -57,11 +61,11 @@ export default class LoginScreen extends React.Component {
       <View style={styles.container}>
         <Image style={styles.logoImage} source= {require('../assets/sucatch1.jpg')} />
         <TextInput style={styles.inputBox} 
-        placeholder="Email"
+        placeholder="ID"
         placeholderTextColor = "#1a3f95"
         selectionColor="#fff"
         keyboardType="email-address"
-        onChangeText={this.handleEmail}
+        onChangeText={this.handleID}
         onSubmitEditing={()=> this.password.focus()}
         />
         <TextInput style={styles.inputBox} 
