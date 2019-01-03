@@ -26,8 +26,14 @@ export default class Monitor extends Component {
     };
   }
 
-
-  navigateToLinkScreen = (name, type) => {
+  /**
+   * This function works as a navigator, which navigates the screen to the linke screen.
+   *
+   * @param {name}
+   * @param {type}
+   * @param {itemID}
+   */
+  navigateToLinkScreen = (name, type, itemID) => {
     const companyID = this.state.companyID;
     const companyName = this.state.companyName;
 
@@ -35,7 +41,8 @@ export default class Monitor extends Component {
       name: name,
       compType: type,
       companyID: companyID,
-      companyName: companyName
+      companyName: companyName,
+      itemID: itemID,
     });
   }
 

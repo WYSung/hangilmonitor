@@ -24,20 +24,21 @@ export default class Item extends Component {
         type: PropTypes.string.isRequired
     }
 
-    changePage = (name) => {
+    changePage = (name, itemID) => {
         const onPressed = this.props.onPress;
         const typeOfComp = this.props.type;
 
-        onPressed(name, typeOfComp);
+        onPressed(name, typeOfComp, itemID);
     }
 
     render() {
         const itemList = this.props.itemList;
 
         let items = itemList.map(item => {
+            const itemID = 'ID ' + item.id;
             return (
                 <View style={styles.item} key={uuidv1()}>
-                    <Text style={styles.itemID}>{'ID ' + item.id}</Text>
+                    <Text style={styles.itemID}>{itemID}</Text>
                     <View style={styles.linkButtonContainer}>
                         <Text style={styles.nameText}>{item.name}</Text>
                         <TouchableOpacity 
@@ -50,7 +51,7 @@ export default class Item extends Component {
                                 borderRadius: 13,
                                 alignItems: 'center'
                             }} 
-                            onPress={() => this.changePage(item.name)}>
+                            onPress={() => this.changePage(item.name, itemID)}>
                             <Text style={styles.linkText}>{item.status}</Text>
                         </TouchableOpacity>
                     </View>
