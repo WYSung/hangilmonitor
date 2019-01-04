@@ -35,7 +35,7 @@ export default class Item extends Component {
         const itemList = this.props.itemList;
 
         let items = itemList.map(item => {
-            const itemID = 'ID ' + item.id;
+            const itemID = item.id;
             return (
                 <View style={styles.item} key={uuidv1()}>
                     <Text style={styles.itemID}>{itemID}</Text>
