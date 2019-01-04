@@ -5,7 +5,8 @@ import {
     View,
     Dimensions,
     StatusBar,
-    WebView
+    WebView,
+    ActivityIndicator
 } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
@@ -15,12 +16,19 @@ export default class Link extends Component {
         super(props);
     }
 
+    state = {
+        visible: true
+    }
+
+    hideSpinner() {
+        this.setState({ visible: false });
+    }
 
     /**
      * Set the size of the navigation header with suitable height and suitable font size.
      */
     static navigationOptions = {
-      title: '한길하수처리모니터링',
+      title: '지능형 IoT 모니터링',
       headerStyle: {
         backgroundColor: '#1a3f95',
         height: height / 10
@@ -39,6 +47,10 @@ export default class Link extends Component {
         const itemID = this.props.navigation.getParam('itemID', undefined);
         const componentName = `${compType} ${name}`;
 
+        const url = 'http://t.damoa.io:8090/graph?quick=' + itemID;
+
+        let WebViewRef;
+
         return(
             <View style={styles.container}>
                 <StatusBar barStyle='light-content'></StatusBar>
@@ -52,9 +64,21 @@ export default class Link extends Component {
                 </View>
                 <View style={{ justifycontent: 'flex_end', alignItems:'center', marginTop: 10, width: width, height: height / 4 * 3 }}>
                     <WebView
-                        source={{ uri: 'http://t.damoa.io:8090/graph?item=401016E0' }} 
-                        style={{ marginTop: 5, width: width }}
+                        injectedJavaScript={`const meta = document.createElement('meta'); meta.setAttribute('content', 'width=width, initial-scale=0.45, maximum-scale=0.45, user-scalable=2.0'); meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta); `}
+                        ref={WEBVIEW_REF => (WebViewRef = WEBVIEW_REF)}
+                        source={{ uri: url }} 
+                        style={{ marginTop: 5, width: width }} 
+                        onLoad={() => this.hideSpinner()} 
+                        javaScriptEnabled={true} 
+                        scalesPageToFit={false} 
+                        onError={() => WebViewRef.reload()} //reload on error
                     />
+                    {this.state.visible && (
+                        <ActivityIndicator
+                            style={{ position: "absolute", top: height / 3, left: width / 2 }}
+                            size="large"
+                        />
+                    )}
                 </View>
             </View>
         );
