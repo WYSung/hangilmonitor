@@ -17,7 +17,7 @@ const { width, height } = Dimensions.get('window');
 
 export default class WelcomeScreen extends React.Component {
   static navigationOptions = {
-    title: '한길 하수처리 모니터링',
+    title: '지능형 IoT 모니터링',
     headerStyle: {
       backgroundColor: '#1a3f95',
     },

@@ -16,7 +16,7 @@ const { width, height } = Dimensions.get('window');
 export default class LoginScreen extends React.Component {
 
   static navigationOptions = {
-    title: '한길하수처리모니터링',
+    title: '지능형 IoT 모니터링',
     headerStyle: {
       backgroundColor: '#1a3f95',
     },
@@ -76,7 +76,7 @@ export default class LoginScreen extends React.Component {
         ref={(input) => this.password = input}
         />
         <TouchableOpacity style={styles.buttonBox} onPress={() => this.storeID()}>
-          <Text style={styles.buttonText}>"Login"</Text>
+          <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
         <View style={styles.signupTextCont}>
           <Text style={styles.signupText}> 등록 아이디가 없다면... </Text>
