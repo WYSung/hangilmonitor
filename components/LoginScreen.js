@@ -34,11 +34,7 @@ export default class LoginScreen extends React.Component {
 
       await AsyncStorage.setItem('id', id);
 
-      await AsyncStorage.removeItem('id');
-
       await AsyncStorage.setItem('pw', password);
-
-      await AsyncStorage.removeItem('pw');
 
       this.props.navigation.navigate('Monitor', {id: id, pw: password});
 

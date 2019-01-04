@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 
 
+import LoginScreen from './LoginScreen';
 
 const { width, height } = Dimensions.get('window');
 
@@ -24,29 +25,18 @@ export default class WelcomeScreen extends React.Component {
     headerTintColor: '#fff',
   };
 
-  checkAutoLogIn = async () => {
-    const id = await AsyncStorage.getItem('id');
-    const pw = await AsyncStorage.getItem('pw');
-    const navigate = this.props.navigation.navigate;
-
-    if (id) {
-      navigate('Monitor', {id: id, pw: pw});
-    } else {
-      navigate('Login');
-    }
-  }
 
   render() {
     return(
       <View style={styles.container}>
-          <StatusBar 
-          BackgroundColor="1a3f95" 
-          barStyle="light-content" 
-          />
-        <TouchableOpacity onPress={() => this.checkAutoLogIn()}>
+        <StatusBar
+          BackgroundColor="1a3f95"
+          barStyle="light-content"
+        />
+        <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')}>
           <Image
-            resizeMode= 'contain'
-            resizeMethod= 'auto'
+            resizeMode='contain'
+            resizeMethod='auto'
             style={styles.welcomeScreenImage}
             source={require('../assets/sucatchCover.jpg')}
           />

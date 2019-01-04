@@ -11,10 +11,6 @@ import {
 } from 'react-native';
 
 
-// or any pure javascript modules available in npm
-//import { Card } from 'react-native-paper';
-//import Logo from './Logo';
-//import Form from './Form';
 export default class Signup extends React.Component {
   static navigationOptions = {
     title: '한길하수처리모니터링',
