@@ -114,7 +114,10 @@ export default class Monitor extends Component {
       }
 
       return (
-        <ScrollView contentContainerStyle={styles.container}>
+        <ScrollView 
+          contentContainerStyle={styles.container} 
+          scrollEnabled={true}
+          indicatorStyle={'white'}>
           <StatusBar barStyle="light-content" />
           <View style={styles.company}>
             <Text style={styles.companyText}>{companyName}</Text>
@@ -138,9 +141,8 @@ export default class Monitor extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    flexGrow: 1,
     alignItems: 'center',
-    width: width,
-    height: height,
     backgroundColor: '#1a3f95',
   },
   company: {
