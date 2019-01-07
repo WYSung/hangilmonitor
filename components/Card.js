@@ -29,6 +29,7 @@ export default class Card extends Component {
     const goToLink = this.props.goToLink;
 
     let numOfItems = ((data.length % 2 === 0) ? data.length / 2 : (data.length / 2) + 1);
+    let cardHeight = ((data.length < 3) ? height / 6 : (data.length < 5 ? height / 7 * numOfItems : height * numOfItems / 8));
 
     let img =
       type === "브로워"
@@ -44,7 +45,7 @@ export default class Card extends Component {
       <View style={{
         backgroundColor: "#1a3f95",
         width: width,
-        height: height * numOfItems / 6,
+        height: cardHeight,
         borderBottomColor: "#bbbbbb",
         borderBottomWidth: 0.5,
         flexDirection: "row",
