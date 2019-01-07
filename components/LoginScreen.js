@@ -54,6 +54,13 @@ export default class LoginScreen extends React.Component {
     }
   }
 
+  removeID = async () => {
+    await AsyncStorage.removeItem('id');
+    await AsyncStorage.removeItem('pw');
+
+    console.log('fuck');
+  }
+
 
   render() {
 
@@ -77,8 +84,11 @@ export default class LoginScreen extends React.Component {
         value={this.state.pw}
         ref={(input) => this.password = input}
         />
-        <TouchableOpacity style={styles.buttonBox} onPress={() => this.storeID()}>
+        <TouchableOpacity style={styles.loginButtonBox} onPress={() => this.storeID()}>
           <Text style={styles.buttonText}>Login</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.removeButtonBox}>
+          <Text style={styles.buttonText} onPress={() => this.removeID()}>Remove</Text>
         </TouchableOpacity>
       </View>
     );
@@ -90,7 +100,6 @@ const styles = StyleSheet.create({
       backgroundColor: '#1a3f95',
       flexGrow: 1,
       alignItems: 'center',
-      //justifyContent: 'center'
     },
     logoImage: {
       width: height / 6,
@@ -108,7 +117,7 @@ const styles = StyleSheet.create({
       color: '#ffffff',
       marginVertical: 5
     },
-    buttonBox: {
+    loginButtonBox: {
       width: width * 4/5,
       height: height / 15,
       backgroundColor: '#a8a9ad',
@@ -122,5 +131,13 @@ const styles = StyleSheet.create({
       fontWeight: '500',
       color: "#ffffff",
       textAlign: 'center'
+    },
+    removeButtonBox: {
+      width: width * 4 / 5,
+      height: height / 15,
+      backgroundColor: '#a8a9ad',
+      borderRadius: 25,
+      paddingVertical: 5,
+      justifyContent: 'center'
     }
 });
