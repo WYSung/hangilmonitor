@@ -1,4 +1,4 @@
-
+import React from 'react';
 import { AsyncStorage } from 'react-native';
 
 import {createStackNavigator,createAppContainer} from 'react-navigation'
@@ -9,9 +9,9 @@ import Link from './components/LinkScreen'
 
 const AppStackNavigator = createStackNavigator({
   Welcome: {screen: WelcomeScreen},
-  Login: { screen: LoginScreen },
   Monitor: {screen: Monitor},
   Link: { screen: Link},
+  Login: { screen: LoginScreen },
 });
 
 const LoggedInStackNavigator = createStackNavigator({
@@ -20,12 +20,33 @@ const LoggedInStackNavigator = createStackNavigator({
   Link: { screen: Link },
 });
 
-checkLoggedIn = async () => {
-  const id = await AsyncStorage.getItem('id', undefined);
+export default class App extends React.Component {
+  state = {
+    isLoggedIn: false,
+  }
+  checkLoggedIn = async () => {
+    const id = await AsyncStorage.getItem('id');
 
-  return id;
+    if (id) {
+      this.setState({isLoggedIn: true});
+    }
+  }
+
+  componentWillMount = () => {
+    this.checkLoggedIn();
+  }
+
+  render() {
+    const {isLoggedIn} = this.state;
+
+    let Container;
+
+    if (isLoggedIn) {
+      Container = createAppContainer(LoggedInStackNavigator);
+    } else {
+      Container = createAppContainer(AppStackNavigator);
+    }
+
+    return (<Container></Container>)
+  }
 }
-
-const navigator = (checkLoggedIn() ? LoggedInStackNavigator : AppStackNavigator);
-
-export default createAppContainer(navigator);

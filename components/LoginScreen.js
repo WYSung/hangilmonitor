@@ -57,8 +57,6 @@ export default class LoginScreen extends React.Component {
   removeID = async () => {
     await AsyncStorage.removeItem('id');
     await AsyncStorage.removeItem('pw');
-
-    console.log('fuck');
   }
 
 
