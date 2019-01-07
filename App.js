@@ -1,6 +1,5 @@
 
-import React, {Component} from 'react';
-//import { View, Text, StyleSheet, StatusBar, Image, TextInput, TouchableOpacity,Dimensions} from 'react-native';
+import { AsyncStorage } from 'react-native';
 
 import {createStackNavigator,createAppContainer} from 'react-navigation'
 import WelcomeScreen from './components/WelcomeScreen'
@@ -15,5 +14,18 @@ const AppStackNavigator = createStackNavigator({
   Link: { screen: Link},
 });
 
-export default createAppContainer(AppStackNavigator);
+const LoggedInStackNavigator = createStackNavigator({
+  Login: { screen: LoginScreen },
+  Monitor: { screen: Monitor },
+  Link: { screen: Link },
+});
 
+checkLoggedIn = async () => {
+  const id = await AsyncStorage.getItem('id', undefined);
+
+  return id;
+}
+
+const navigator = (checkLoggedIn() ? LoggedInStackNavigator : AppStackNavigator);
+
+export default createAppContainer(navigator);
