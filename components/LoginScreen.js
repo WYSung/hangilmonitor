@@ -25,31 +25,35 @@ export default class LoginScreen extends React.Component {
 
   state = {
     id: undefined,
-    password: undefined
+    pw: undefined
+  }
+
+  componentDidMount = () => {
+    this.checkIfLoggedIn();
+  }
+
+  checkIfLoggedIn = async () => {
+    const id = await AsyncStorage.getItem('id', undefined);
+    const pw = await AsyncStorage.getItem('pw', undefined);
+
+    this.setState({id: id, pw: pw});
   }
 
   storeID = async () => {
     try {
-      const {id, password} = this.state;
+      const {id, pw} = this.state;
 
       await AsyncStorage.setItem('id', id);
 
-      await AsyncStorage.setItem('pw', password);
+      await AsyncStorage.setItem('pw', pw);
 
-      this.props.navigation.navigate('Monitor', {id: id, pw: password});
+      this.props.navigation.navigate('Monitor', {id: id, pw: pw});
 
     } catch {
       alert('failed to store id');
     }
   }
 
-  handleID = (id) => {
-    this.setState({id: id});
-  }
-
-  handlePassword = (pw) => {
-    this.setState({password: pw});
-  }
 
   render() {
 
@@ -61,14 +65,16 @@ export default class LoginScreen extends React.Component {
         placeholderTextColor = "#1a3f95"
         selectionColor="#fff"
         keyboardType="email-address"
-        onChangeText={this.handleID}
+        onChangeText={(id) => this.setState({id: id})}
+        value={this.state.id}
         onSubmitEditing={()=> this.password.focus()}
         />
         <TextInput style={styles.inputBox} 
         placeholder="Password"
         secureTextEntry={true}
         placeholderTextColor = "#1a3f95"
-        onChangeText={this.handlePassword}
+        onChangeText={(pw) => this.setState({pw: pw})}
+        value={this.state.pw}
         ref={(input) => this.password = input}
         />
         <TouchableOpacity style={styles.buttonBox} onPress={() => this.storeID()}>
