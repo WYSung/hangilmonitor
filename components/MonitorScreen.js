@@ -6,6 +6,7 @@ import Card from './Card';
 
 const { width, height } = Dimensions.get('window');
 
+const NOT_REGISTERED = "미입력";
 
 export default class Monitor extends Component {
 
@@ -89,18 +90,28 @@ export default class Monitor extends Component {
 
     if (isLoaded) {
 
-      let cards = siteData['sensors'].map(sensor => {
-        if (sensor.installed.length > 0) {
-          return (
-            <Card
-              itemType={sensor['category']}
-              data={sensor['installed']}
-              goToLink={this.navigateToLinkScreen} 
-              key={uuidv1()}
-            />
-          );
-        }
-      });
+      let cards;
+      if (siteData.name == NOT_REGISTERED && siteData.zip == NOT_REGISTERED) {
+        cards =
+          <View style={styles.registerContainer}>
+            <Text style={styles.registerMessage}>고객 등록 후 로그인 해주세요</Text>
+            <Text style={styles.registerMessage}>고객 등록은 한길 자연 임채중 이사님</Text>
+            <Text style={styles.contactMessage}>(010-XXXX-YYYY name@hangile.com)</Text>
+          </View>
+      } else {
+        cards = siteData['sensors'].map(sensor => {
+          if (sensor.installed.length > 0) {
+            return (
+              <Card
+                itemType={sensor['category']}
+                data={sensor['installed']}
+                goToLink={this.navigateToLinkScreen}
+                key={uuidv1()}
+              />
+            );
+          }
+        });
+      }
 
       return (
         <View style={styles.container}>
@@ -154,5 +165,20 @@ const styles = StyleSheet.create({
     fontSize: width / 20,
     paddingLeft: 15,
     paddingBottom: 10,
+  },
+  registerContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: width,
+    height: height / 3 * 2,
+    backgroundColor: '#1a3f95',
+  },
+  registerMessage: {
+    color: 'white',
+    fontSize: width / 20
+  },
+  contactMessage: {
+    color: 'white',
+    fontSize: width / 20
   },
 });

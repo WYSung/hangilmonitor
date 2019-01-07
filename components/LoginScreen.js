@@ -74,12 +74,6 @@ export default class LoginScreen extends React.Component {
         <TouchableOpacity style={styles.buttonBox} onPress={() => this.storeID()}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
-        <View style={styles.signupTextCont}>
-          <Text style={styles.signupText}> 등록 아이디가 없다면... </Text>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('Signup')}>
-            <Text style={styles.signupButton}> 회원가입 </Text>
-          </TouchableOpacity>
-        </View>
       </View>
     );
   }
@@ -90,29 +84,13 @@ const styles = StyleSheet.create({
       backgroundColor: '#1a3f95',
       flexGrow: 1,
       alignItems: 'center',
-      justifyContent: 'center'
+      //justifyContent: 'center'
     },
     logoImage: {
-      width: width / 5,
+      width: height / 6,
       height: height / 6,
       marginBottom: height / 10,
       marginTop: height / 20
-    },
-    signupTextCont: {
-      flexGrow: 1,
-      alignItems: 'center',
-      justifyContent : 'flex-end',
-      paddingVertical: 10,
-      flexDirection: 'row'
-    },
-    signupText: {
-      color: 'rgba(255,255,255,0.7)',
-      fontSize: width / 25
-    },
-    signupButton: {
-      color: "#ffffff",
-      fontSize: width / 25,
-      fontWeight: '500'
     },
     inputBox: {
       width: width * 4/5,
@@ -130,7 +108,8 @@ const styles = StyleSheet.create({
       backgroundColor: '#a8a9ad',
       borderRadius: 25,
       marginVertical: 10,
-      paddingVertical: 5
+      paddingVertical: 5,
+      justifyContent: 'center'
     },
     buttonText: {
       fontSize : width / 25,

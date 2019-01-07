@@ -12,8 +12,6 @@ import {
 } from 'react-native';
 
 
-import LoginScreen from './LoginScreen';
-
 const { width, height } = Dimensions.get('window');
 
 export default class WelcomeScreen extends React.Component {
