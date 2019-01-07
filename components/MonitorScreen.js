@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Dimensions, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, StatusBar, ScrollView } from 'react-native';
 import uuidv1 from 'uuid/v1';
 
 import Card from './Card';
@@ -114,7 +114,7 @@ export default class Monitor extends Component {
       }
 
       return (
-        <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.container}>
           <StatusBar barStyle="light-content" />
           <View style={styles.company}>
             <Text style={styles.companyText}>{companyName}</Text>
@@ -123,7 +123,7 @@ export default class Monitor extends Component {
             <Text style={styles.companyID_Text}>{companyID}</Text>
           </View>
           {cards}
-        </View>
+        </ScrollView>
       );
 
     } else {
