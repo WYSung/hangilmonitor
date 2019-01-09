@@ -29,7 +29,7 @@ export default class Card extends Component {
     const goToLink = this.props.goToLink;
 
     let numOfItems = ((data.length % 2 === 0) ? data.length / 2 : (data.length / 2) + 1);
-    let cardHeight = ((data.length < 3) ? height / 6 : (data.length < 5 ? height / 7 * numOfItems : height * numOfItems / 8));
+    let cardHeight = ((data.length < 5) ? height / 6 : height / 7 * numOfItems);
 
     let img =
       type === "브로워"
