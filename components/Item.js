@@ -38,7 +38,7 @@ export default class Item extends Component {
             const itemID = item.id;
             return (
                 <View style={styles.item} key={uuidv1()}>
-                    <Text style={styles.itemID}>{itemID}</Text>
+                    <Text style={styles.itemID}>{'ID ' + itemID}</Text>
                     <View style={styles.linkButtonContainer}>
                         <Text style={styles.nameText}>{item.name}</Text>
                         <TouchableOpacity 
@@ -71,13 +71,13 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: "#1a3f95",
         height: height / 8,
-        width: width / 7 * 5 // width - (height / 8) - (width / 20),
+        flex: 1,
     },
     item: {
         flexDirection: 'row',
         paddingTop: height / 50,
         paddingLeft: width / 30,
-        justifyContent: 'space-around'
+        justifyContent: 'space-between'
     },
     itemID: {
         color: "#ffffff",
