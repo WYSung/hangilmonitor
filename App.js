@@ -25,7 +25,7 @@ export default class App extends React.Component {
     isLoggedIn: false,
   }
   checkLoggedIn = async () => {
-    const id = await AsyncStorage.getItem('id');
+    const id = await AsyncStorage.getItem('Hangil@id');
 
     if (id) {
       this.setState({isLoggedIn: true});

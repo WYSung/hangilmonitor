@@ -33,8 +33,8 @@ export default class LoginScreen extends React.Component {
   }
 
   checkIfLoggedIn = async () => {
-    const id = await AsyncStorage.getItem('id', undefined);
-    const pw = await AsyncStorage.getItem('pw', undefined);
+    const id = await AsyncStorage.getItem('Hangil@id', undefined);
+    const pw = await AsyncStorage.getItem('Hangil@pw', undefined);
 
     this.setState({id: id, pw: pw});
   }
@@ -43,9 +43,9 @@ export default class LoginScreen extends React.Component {
     try {
       const {id, pw} = this.state;
 
-      await AsyncStorage.setItem('id', id);
+      await AsyncStorage.setItem('Hangil@id', id);
 
-      await AsyncStorage.setItem('pw', pw);
+      await AsyncStorage.setItem('Hangil@pw', pw);
 
       this.props.navigation.navigate('Monitor', {id: id, pw: pw});
 
@@ -55,8 +55,8 @@ export default class LoginScreen extends React.Component {
   }
 
   removeID = async () => {
-    await AsyncStorage.removeItem('id');
-    await AsyncStorage.removeItem('pw');
+    await AsyncStorage.removeItem('Hangil@id');
+    await AsyncStorage.removeItem('Hangil@pw');
   }
 
 

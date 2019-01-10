@@ -103,7 +103,7 @@ export default class Link extends Component {
                             if (this.countTimeout()) {
                                 WebViewRef.reload()
                             } else {
-                                handleBackButton();
+                                this.handleBackButton();
                                 this.props.navigation.goBack();
                             }
                         }} //reload on error

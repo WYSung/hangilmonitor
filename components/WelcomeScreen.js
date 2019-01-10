@@ -7,8 +7,7 @@ import {
     StatusBar,
     Image,
     TouchableOpacity,
-    Dimensions,
-    AsyncStorage
+    Dimensions
 } from 'react-native';
 
 
