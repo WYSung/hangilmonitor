@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Dimensions, StatusBar, ScrollView } from 'react-native';
+import { 
+  StyleSheet, 
+  Text, 
+  View, 
+  Dimensions, 
+  StatusBar, 
+  ScrollView, 
+  BackHandler 
+} from 'react-native';
 import uuidv1 from 'uuid/v1';
 
 import Card from './Card';
@@ -38,6 +46,8 @@ export default class Monitor extends Component {
     const companyID = this.state.companyID;
     const companyName = this.state.companyName;
 
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+
     this.props.navigation.navigate('Link', {
       name: name,
       compType: type,
@@ -45,6 +55,11 @@ export default class Monitor extends Component {
       companyName: companyName,
       itemID: itemID,
     });
+  }
+
+  handleBackButton = () => {
+    BackHandler.exitApp();
+    return true;
   }
 
   /**
@@ -82,7 +97,9 @@ export default class Monitor extends Component {
             error
           });
         }
-      )
+      );
+    
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
   }
  
   render() {
@@ -141,7 +158,7 @@ export default class Monitor extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
+    flex: 1,
     alignItems: 'center',
     backgroundColor: '#1a3f95',
   },
