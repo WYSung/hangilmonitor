@@ -34,34 +34,35 @@ export default class Item extends Component {
     render() {
         const itemList = this.props.itemList;
 
-        let items = itemList.map(item => {
-            const itemID = item.id;
-            return (
-                <View style={styles.item} key={uuidv1()}>
-                    <Text style={styles.itemID}>{'ID ' + itemID}</Text>
-                    <View style={styles.linkButtonContainer}>
-                        <Text style={styles.nameText}>{item.name}</Text>
-                        <TouchableOpacity 
-                            style={{
-                                width: width / 7,
-                                height: width / 13,
-                                backgroundColor: (item.color === 'normal' ? '#a8a9ad' : 'red'),
-                                borderColor: '#1a3f95',
-                                borderWidth: 0.7,
-                                borderRadius: 13,
-                                alignItems: 'center'
-                            }} 
-                            onPress={() => this.changePage(item.name, itemID)}>
-                            <Text style={styles.linkText}>{item.status}</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            );
-        });
-
         return (
             <View style={styles.container}>
-                {items}
+                {itemList.map((item) => {
+                    const itemID = item.id; //this.changePage(item.name, itemID)
+
+                    return (
+                        <View style={styles.item} key={uuidv1()}>
+                            <Text style={styles.itemID}>{'ID ' + itemID}</Text>
+                            <View style={styles.linkButtonContainer}>
+                                <Text style={styles.nameText}>{item.name}</Text>
+                                <TouchableOpacity
+                                    key={itemID}
+                                    style={{
+                                        width: width / 7,
+                                        height: width / 13,
+                                        backgroundColor: (item.color === 'normal' ? '#a8a9ad' : 'red'),
+                                        borderColor: '#1a3f95',
+                                        borderWidth: 0.7,
+                                        borderRadius: 13,
+                                        alignItems: 'center'
+                                    }}
+                                    activeOpacity={0.7} 
+                                    onPress={this.changePage.bind(this, item.name, itemID)}>
+                                    <Text style={styles.linkText}>{item.status}</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    );
+                })}
             </View>
         );
     }
@@ -70,7 +71,6 @@ export default class Item extends Component {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "#1a3f95",
-        height: height / 8,
         flex: 1,
     },
     item: {
@@ -88,15 +88,6 @@ const styles = StyleSheet.create({
     linkButtonContainer: {
         flexDirection: 'row',
         marginRight: width / 20
-    },
-    linkButton: {
-        width: width / 7,
-        height: width / 13,
-        backgroundColor: '#a8a9ad',
-        borderColor: '#1a3f95',
-        borderWidth: 0.7,
-        borderRadius: 13,
-        alignItems: 'center'
     },
     linkText: {
         color: "#1a3f95",
