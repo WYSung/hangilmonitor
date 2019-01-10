@@ -6,7 +6,8 @@ import {
     Dimensions,
     StatusBar,
     WebView,
-    ActivityIndicator
+    ActivityIndicator,
+    BackHandler
 } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
@@ -17,11 +18,38 @@ export default class Link extends Component {
     }
 
     state = {
-        visible: true
+        visible: true,
+        count: 0
     }
 
     hideSpinner() {
         this.setState({ visible: false });
+    }
+
+    handleBackButtonForExit = () => {
+        BackHandler.exitApp();
+        return true;
+    }
+
+    handleBackButton = () => {
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonForExit);
+    }
+
+    componentDidMount = () => {
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+    }
+
+    countTimeout = () => {
+        const count = this.state.count;
+        this.setState({ count: count + 1 });
+        console.log(count);
+
+        if (count < 4) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -71,7 +99,14 @@ export default class Link extends Component {
                         onLoad={() => this.hideSpinner()} 
                         javaScriptEnabled={true} 
                         scalesPageToFit={false} 
-                        onError={() => WebViewRef.reload()} //reload on error
+                        onError={() => {
+                            if (this.countTimeout()) {
+                                WebViewRef.reload()
+                            } else {
+                                handleBackButton();
+                                this.props.navigation.goBack();
+                            }
+                        }} //reload on error
                     />
                     {this.state.visible && (
                         <ActivityIndicator
