@@ -6,8 +6,7 @@ import {
     Dimensions,
     StatusBar,
     WebView,
-    ActivityIndicator,
-    BackHandler
+    ActivityIndicator
 } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
@@ -26,24 +25,9 @@ export default class Link extends Component {
         this.setState({ visible: false });
     }
 
-    handleBackButtonForExit = () => {
-        BackHandler.exitApp();
-        return true;
-    }
-
-    handleBackButton = () => {
-        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-        BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonForExit);
-    }
-
-    componentDidMount = () => {
-        BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
-    }
-
     countTimeout = () => {
         const count = this.state.count;
         this.setState({ count: count + 1 });
-        console.log(count);
 
         if (count < 4) {
             return true;
@@ -103,7 +87,6 @@ export default class Link extends Component {
                             if (this.countTimeout()) {
                                 WebViewRef.reload()
                             } else {
-                                this.handleBackButton();
                                 this.props.navigation.goBack();
                             }
                         }} //reload on error

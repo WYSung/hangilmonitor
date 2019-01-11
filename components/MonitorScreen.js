@@ -5,8 +5,7 @@ import {
   View, 
   Dimensions, 
   StatusBar, 
-  ScrollView, 
-  BackHandler 
+  ScrollView
 } from 'react-native';
 import uuidv1 from 'uuid/v1';
 
@@ -46,7 +45,7 @@ export default class Monitor extends Component {
     const companyID = this.state.companyID;
     const companyName = this.state.companyName;
 
-    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+    //BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
 
     this.props.navigation.navigate('Link', {
       name: name,
@@ -98,8 +97,8 @@ export default class Monitor extends Component {
           });
         }
       );
-    
-    BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+
+    //BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
   }
  
   render() {
