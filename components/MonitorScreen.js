@@ -31,6 +31,7 @@ export default class Monitor extends Component {
       companyID: '',
       companyName: '',
       siteData: undefined,
+      url: ''
     };
   }
 
@@ -61,19 +62,17 @@ export default class Monitor extends Component {
     return true;
   }
 
-  /**
-   * Get the data by using https protocol when the component is mounted.
-   */
-  componentDidMount() {
-
+  fetchData = () => {
     const id = this.props.navigation.getParam('id', '0000');
     const pw = this.props.navigation.getParam('pw', '1004');
 
-    const temp_url = 'https://t.damoa.io:8092/site/' + id + '/' + pw;
+    const url = 'http://t.damoa.io:8090/site/' + id + '/' + pw;
 
-    console.log(temp_url);
+    this.setState({ url: url });
 
-    fetch(temp_url)
+    console.log(url);
+
+    fetch(url)
       .then(res => res.json())
       .then(
         (result) => {
@@ -86,17 +85,26 @@ export default class Monitor extends Component {
             companyName: companyName,
             companyID: companyId
           });
-        },
+        }
+      )
+      .catch((error) => {
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
         // exceptions from actual bugs in components.
-        (error) => {
-          this.setState({
-            isLoaded: false,
-            error
-          });
-        }
-      );
+        console.log(error);
+        this.setState({
+          isLoaded: false,
+          error
+        });
+      });
+  }
+
+  /**
+   * Get the data by using https protocol when the component is mounted.
+   */
+  componentDidMount() {
+
+    this.fetchData();
 
     //BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
   }
