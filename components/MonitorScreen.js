@@ -64,7 +64,7 @@ export default class Monitor extends Component {
 
   fetchData = () => {
     const id = this.props.navigation.getParam('id', '0000');
-    const pw = this.props.navigation.getParam('pw', '1004');
+    const pw = this.props.navigation.getParam('pw', 'suho1004');
 
     //http -> http://t.damoa.io:8090/site/
     const url = 'https://t.damoa.io:8092/site/' + id + '/' + pw;
