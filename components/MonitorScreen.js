@@ -66,7 +66,8 @@ export default class Monitor extends Component {
     const id = this.props.navigation.getParam('id', '0000');
     const pw = this.props.navigation.getParam('pw', '1004');
 
-    const url = 'http://t.damoa.io:8090/site/' + id + '/' + pw;
+    //http -> http://t.damoa.io:8090/site/
+    const url = 'https://t.damoa.io:8092/site/' + id + '/' + pw;
 
     this.setState({ url: url });
 
