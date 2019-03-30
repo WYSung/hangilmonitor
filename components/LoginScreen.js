@@ -8,8 +8,15 @@ import {
     TextInput,
     Image,
     Dimensions,
-    AsyncStorage
+    AsyncStorage,
+    KeyboardAvoidingView,
+    TouchableWithoutFeedback,
+    SafeAreaView,
+    Keyboard,
+    Platform,
+    ScrollView
 } from 'react-native';
+import { Header } from 'react-navigation';
 
 const { width, height } = Dimensions.get('window');
 
@@ -63,32 +70,44 @@ export default class LoginScreen extends React.Component {
   render() {
 
     return(
-      <View style={styles.container}>
-        <Image style={styles.logoImage} source= {require('../assets/sucatch1.jpg')} />
-        <TextInput style={styles.inputBox} 
-        placeholder="ID"
-        placeholderTextColor = "#1a3f95"
-        selectionColor="#fff"
-        keyboardType="email-address"
-        onChangeText={(id) => this.setState({id: id})}
-        value={this.state.id}
-        onSubmitEditing={()=> this.password.focus()}
-        />
-        <TextInput style={styles.inputBox} 
-        placeholder="Password"
-        secureTextEntry={true}
-        placeholderTextColor = "#1a3f95"
-        onChangeText={(pw) => this.setState({pw: pw})}
-        value={this.state.pw}
-        ref={(input) => this.password = input}
-        />
-        <TouchableOpacity style={styles.loginButtonBox} onPress={() => this.storeID()}>
-          <Text style={styles.buttonText}>Login</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.removeButtonBox}>
-          <Text style={styles.buttonText} onPress={() => this.removeID()}>Remove</Text>
-        </TouchableOpacity>
-      </View>
+      <KeyboardAvoidingView 
+        keyboardVerticalOffset={Platform.select({ ios: 0, android: width / 3 })}
+        style={{flex: 1}} 
+        behavior={"padding"} 
+        enabled>
+        <SafeAreaView style={styles.container}>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <ScrollView>
+            <View style={styles.container}>
+              <Image style={styles.logoImage} source= {require('../assets/sucatch1.jpg')} />
+              <TextInput style={styles.inputBox} 
+              placeholder="ID"
+              placeholderTextColor = "#1a3f95"
+              selectionColor="#fff"
+              keyboardType="email-address"
+              onChangeText={(id) => this.setState({id: id})}
+              value={this.state.id}
+              onSubmitEditing={()=> this.password.focus()}
+              />
+              <TextInput style={styles.inputBox} 
+              placeholder="Password"
+              secureTextEntry={true}
+              placeholderTextColor = "#1a3f95"
+              onChangeText={(pw) => this.setState({pw: pw})}
+              value={this.state.pw}
+              ref={(input) => this.password = input}
+              />
+              <TouchableOpacity style={styles.loginButtonBox} onPress={() => this.storeID()}>
+                <Text style={styles.buttonText}>Login</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.removeButtonBox}>
+                <Text style={styles.buttonText} onPress={() => this.removeID()}>Remove</Text>
+              </TouchableOpacity>
+            </View>
+            </ScrollView>
+          </TouchableWithoutFeedback>
+        </SafeAreaView>
+      </KeyboardAvoidingView>
     );
   }
 }
