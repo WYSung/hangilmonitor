@@ -8,6 +8,7 @@ import {
     WebView,
     ActivityIndicator
 } from 'react-native';
+//import { WebView } from 'react-native-webview';
 
 const { width, height } = Dimensions.get('window');
 
@@ -77,10 +78,11 @@ export default class Link extends Component {
                 <View style={{ justifycontent: 'flex_end', alignItems:'center', marginTop: 10, width: width, height: height / 4 * 3 }}>
                     <WebView
                         injectedJavaScript={`const meta = document.createElement('meta'); meta.setAttribute('content', 'width=width, initial-scale=0.4, maximum-scale=3.0, user-scalable=3.0'); meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta); `}
-                        ref={WEBVIEW_REF => (WebViewRef = WEBVIEW_REF)}
+                        ref={WEBVIEW_REF => (WebViewRef = WEBVIEW_REF)} 
                         source={{ uri: url }} 
                         style={{ marginTop: 5, width: width }} 
-                        onLoad={() => this.hideSpinner()} 
+                        onLoadEnd={() => this.hideSpinner()} 
+                        startInLoadingState={true} 
                         javaScriptEnabled={true} 
                         scalesPageToFit={false} 
                         onError={() => {
