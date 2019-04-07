@@ -31,7 +31,8 @@ export default class Monitor extends Component {
       companyID: '',
       companyName: '',
       siteData: undefined,
-      url: ''
+      url: '',
+      isEmpty: false
     };
   }
 
@@ -80,11 +81,23 @@ export default class Monitor extends Component {
           const companyName = result['name'];
           const companyId = 'ID ' + result['id'];
 
+          let i;
+          let checker = true;
+          let sensors = result['sensors'];
+
+          for (i = 0; i < sensors.length; i++) {
+            if (sensors[i]['installed'].length != 0) {
+              checker = false;
+              break;
+            }
+          }
+
           this.setState({
             isLoaded: true,
             siteData: result,
             companyName: companyName,
-            companyID: companyId
+            companyID: companyId,
+            isEmpty: checker
           });
         }
       )
@@ -111,18 +124,28 @@ export default class Monitor extends Component {
   }
  
   render() {
-    const { isLoaded, companyID, companyName, siteData } = this.state;
+    const { isLoaded, companyID, companyName, siteData, isEmpty } = this.state;
 
     if (isLoaded) {
 
       let cards;
+
       if (siteData.name == NOT_REGISTERED && siteData.zip == NOT_REGISTERED) {
+
         cards =
           <View style={styles.registerContainer}>
             <Text style={styles.registerMessage}>고객 등록 후 로그인 해주세요</Text>
             <Text style={styles.registerMessage}>고객 등록은 한길 자연 임채중 이사님</Text>
             <Text style={styles.contactMessage}>(010-XXXX-YYYY name@hangile.com)</Text>
           </View>
+
+      } else if (isEmpty) {
+
+        cards =
+          <View style={styles.noInstalledContainer}>
+            <Text style={styles.noInstalledMessage}>설치된 기기가 없습니다</Text>
+          </View>
+
       } else {
         cards = siteData['sensors'].map(sensor => {
           if (sensor.installed.length > 0) {
@@ -205,6 +228,17 @@ const styles = StyleSheet.create({
     fontSize: width / 20
   },
   contactMessage: {
+    color: 'white',
+    fontSize: width / 20
+  },
+  noInstalledContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: width,
+    height: height / 3 * 2,
+    backgroundColor: '#1a3f95',
+  },
+  noInstalledMessage: {
     color: 'white',
     fontSize: width / 20
   },
