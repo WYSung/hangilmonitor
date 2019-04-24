@@ -100,8 +100,8 @@ export default class LoginScreen extends React.Component {
               <TouchableOpacity style={styles.loginButtonBox} onPress={() => this.storeID()}>
                 <Text style={styles.buttonText}>Login</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.removeButtonBox}>
-                <Text style={styles.buttonText} onPress={() => this.removeID()}>Remove</Text>
+              <TouchableOpacity style={styles.removeButtonBox} onPress={() => this.removeID()}>
+                <Text style={styles.buttonText}>Remove</Text>
               </TouchableOpacity>
             </View>
             </ScrollView>

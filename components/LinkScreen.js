@@ -22,8 +22,11 @@ export default class Link extends Component {
         count: 0
     }
 
-    hideSpinner() {
-        this.setState({ visible: false });
+    renderLoading = () => {
+        return (<ActivityIndicator
+            style={{ position: "absolute", top: height / 3, left: width / 2 }}
+            size="large"
+        />);
     }
 
     countTimeout = () => {
@@ -58,9 +61,9 @@ export default class Link extends Component {
         const companyId = this.props.navigation.getParam('companyID', undefined);
         const companyName = this.props.navigation.getParam('companyName', undefined);
         const itemID = this.props.navigation.getParam('itemID', undefined);
-        const componentName = `${compType} ${name}`;
+        const componentName = `${compType} ${companyId}`;
 
-        const url = 'http://t.damoa.io:8090/graph?quick=' + itemID;
+        const url = 'https://t.damoa.io:8092/graph?quick=' + itemID;
 
         let WebViewRef;
 
@@ -69,19 +72,19 @@ export default class Link extends Component {
                 <StatusBar barStyle='light-content'></StatusBar>
                 <View style={styles.companyInfo}>
                     <Text style={styles.companyName}>{companyName}</Text>
-                    <Text style={styles.companyID}>{companyId}</Text>
+                    <Text style={styles.companyID}>{name}</Text>
                 </View>
-                <View style={styles.componentView}>
+                {/*<View style={styles.componentView}>
                     <Text style={styles.componentName}>{componentName}</Text>
                     <Text style={styles.componentName}>{itemID}</Text>
-                </View>
+                </View>*/}
                 <View style={{ justifycontent: 'flex_end', alignItems:'center', marginTop: 10, width: width, height: height / 4 * 3 }}>
                     <WebView
-                        injectedJavaScript={`const meta = document.createElement('meta'); meta.setAttribute('content', 'width=width, initial-scale=0.4, maximum-scale=3.0, user-scalable=3.0'); meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta); `}
+                        injectedJavaScript={`const meta = document.createElement('meta'); meta.setAttribute('content', 'width=width, initial-scale=0.5, maximum-scale=3.0, user-scalable=3.0'); meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta); `}
                         ref={WEBVIEW_REF => (WebViewRef = WEBVIEW_REF)} 
                         source={{ uri: url }} 
                         style={{ marginTop: 5, width: width }} 
-                        onLoadEnd={() => this.hideSpinner()} 
+                        renderLoading={this.renderLoading}
                         startInLoadingState={true} 
                         javaScriptEnabled={true} 
                         scalesPageToFit={false} 
@@ -93,12 +96,6 @@ export default class Link extends Component {
                             }
                         }} //reload on error
                     />
-                    {this.state.visible && (
-                        <ActivityIndicator
-                            style={{ position: "absolute", top: height / 3, left: width / 2 }}
-                            size="large"
-                        />
-                    )}
                 </View>
             </View>
         );
