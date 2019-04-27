@@ -7,6 +7,7 @@
   "main": "node_modules/expo/AppEntry.js",
   "dependencies": {
     "expo": "^32.0.6",
+    "expokit": "^31.1.0",
     "prop-types": "15.6.2",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
