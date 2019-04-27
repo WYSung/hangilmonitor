@@ -10,6 +10,8 @@ import {
 import uuidv1 from 'uuid/v1';
 
 import Card from './Card';
+import registerForPushNotificationsAsync from './pushNotification'; //TODO need to test
+
 
 const { width, height } = Dimensions.get('window');
 
@@ -118,6 +120,7 @@ export default class Monitor extends Component {
    */
   componentDidMount() {
     this.fetchData();
+    registerForPushNotificationsAsync();
     //BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
   }
  
