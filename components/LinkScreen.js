@@ -29,6 +29,10 @@ export default class Link extends Component {
         />);
     }
 
+    hideSpinner() {
+        this.setState({ visible: false });
+    }
+
     countTimeout = () => {
         const count = this.state.count;
         this.setState({ count: count + 1 });
@@ -44,15 +48,15 @@ export default class Link extends Component {
      * Set the size of the navigation header with suitable height and suitable font size.
      */
     static navigationOptions = {
-      title: '지능형 IoT 모니터링',
-      headerStyle: {
-        backgroundColor: '#1a3f95',
-        height: height / 10
-      },
-      headerTitleStyle: {
-          fontSize: width / 20
-      },
-      headerTintColor: '#fff',
+        title: '지능형 IoT 모니터링',
+        headerStyle: {
+            backgroundColor: '#1a3f95',
+            height: height / 10
+        },
+        headerTitleStyle: {
+            fontSize: width / 20
+        },
+        headerTintColor: '#fff',
     };
 
     render() {
@@ -66,8 +70,9 @@ export default class Link extends Component {
         const url = 'https://t.damoa.io:8092/graph?quick=' + itemID;
 
         let WebViewRef;
+        let { visible } = this.state;
 
-        return(
+        return (
             <View style={styles.container}>
                 <StatusBar barStyle='light-content'></StatusBar>
                 <View style={styles.companyInfo}>
@@ -78,16 +83,16 @@ export default class Link extends Component {
                     <Text style={styles.componentName}>{componentName}</Text>
                     <Text style={styles.componentName}>{itemID}</Text>
                 </View>*/}
-                <View style={{ justifycontent: 'flex_end', alignItems:'center', marginTop: 10, width: width, height: height / 4 * 3 }}>
+                <View style={{ justifycontent: 'flex_end', alignItems: 'center', marginTop: 10, width: width, height: height / 4 * 3 }}>
                     <WebView
                         injectedJavaScript={`const meta = document.createElement('meta'); meta.setAttribute('content', 'width=width, initial-scale=0.5, maximum-scale=3.0, user-scalable=3.0'); meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta); `}
-                        ref={WEBVIEW_REF => (WebViewRef = WEBVIEW_REF)} 
-                        source={{ uri: url }} 
-                        style={{ marginTop: 5, width: width }} 
-                        renderLoading={this.renderLoading}
-                        startInLoadingState={true} 
-                        javaScriptEnabled={true} 
-                        scalesPageToFit={false} 
+                        ref={WEBVIEW_REF => (WebViewRef = WEBVIEW_REF)}
+                        source={{ uri: url }}
+                        style={{ marginTop: 5, width: width }}
+                        //renderLoading={this.renderLoading}
+                        javaScriptEnabled={true}
+                        scalesPageToFit={false}
+                        onLoadEnd={() => {this.hideSpinner()}}
                         onError={() => {
                             if (this.countTimeout()) {
                                 WebViewRef.reload()
@@ -96,6 +101,12 @@ export default class Link extends Component {
                             }
                         }} //reload on error
                     />
+                    {visible && (
+                        <ActivityIndicator
+                            style={{ position: "absolute", top: height / 3, left: width / 2 }}
+                            size="large"
+                        />
+                    )}
                 </View>
             </View>
         );
@@ -141,19 +152,19 @@ const styles = StyleSheet.create({
     dateRangePicker: {
         width: width,
         backgroundColor: '#1a3f95',
-        fontSize : width / 25,
+        fontSize: width / 25,
         paddingVertical: height / 60,
         flexDirection: 'row',
         alignItems: 'center'
     },
     date_highlighted: {
         color: '#0bb7b4',
-        fontSize : width / 25,
+        fontSize: width / 25,
         marginLeft: width / 20
     },
     date_normal: {
         color: 'grey',
-        fontSize : width / 25,
+        fontSize: width / 25,
         marginLeft: width / 20
     },
     oneDayContainer: {
