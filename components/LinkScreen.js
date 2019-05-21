@@ -66,7 +66,7 @@ export default class Link extends Component {
         const companyName = this.props.navigation.getParam('companyName', undefined);
         const itemID = this.props.navigation.getParam('itemID', undefined);
 
-        const url = 'https://t.damoa.io:8092/graph'//'https://t.damoa.io:8092/graph?quick=' + itemID;
+        const url = 'https://t.damoa.io:8092/graph?quick=' + itemID;
 
         this.setState({ name: name, companyName: companyName, itemID: itemID, url: url});
     };
