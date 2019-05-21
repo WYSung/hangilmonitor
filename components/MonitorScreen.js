@@ -5,7 +5,8 @@ import {
   View, 
   Dimensions, 
   StatusBar, 
-  ScrollView
+  ScrollView,
+  WebView
 } from 'react-native';
 import uuidv1 from 'uuid/v1';
 
@@ -180,8 +181,8 @@ export default class Monitor extends Component {
 
     } else {
       return(
-        <View>
-          <Text>Please wait for few seconds.. </Text>
+        <View style={styles.container}>
+          <Text style={styles.loadingText}>Please wait for few seconds.. </Text>
         </View>
       );
     }
@@ -242,5 +243,10 @@ const styles = StyleSheet.create({
   noInstalledMessage: {
     color: 'white',
     fontSize: width / 20
+  },
+  loadingText: {
+    color: '#ffffff',
+    fontSize: width / 25,
+    paddingLeft: 15,
   },
 });

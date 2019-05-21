@@ -11,6 +11,7 @@ import {
 //import { WebView } from 'react-native-webview';
 
 const { width, height } = Dimensions.get('window');
+const INJECTED_JS = `const meta = document.createElement('meta'); meta.setAttribute('content', 'width=width, initial-scale=0.5, maximum-scale=3.0, user-scalable=3.0'); meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta); `;
 
 export default class Link extends Component {
     constructor(props) {
@@ -18,19 +19,20 @@ export default class Link extends Component {
     }
 
     state = {
-        count: 0
+        visible: true,
+        count: 0,
+        name: '',
+        companyName: '',
+        itemID: '',
+        url: 'https://t.damoa.io:8092/graph?quick='
     }
 
-    /**
-     * Render the loading state.
-     */
-    renderLoading = () => {
-        return (
-            <ActivityIndicator
-                style={{ position: "absolute", top: height / 3, left: width / 2 }}
-                size="large"
-            />
-        );
+    hideSpinner() {
+        this.setState({ visible: false });
+    }
+
+    makeSpinnerVisible() {
+        this.setState({ visible: true });
     }
 
     countTimeout = () => {
@@ -59,17 +61,23 @@ export default class Link extends Component {
         headerTintColor: '#fff',
     };
 
-    render() {
+    componentDidMount = () => {
         const name = this.props.navigation.getParam('name', undefined);
-        const compType = this.props.navigation.getParam('compType', undefined);
-        const companyId = this.props.navigation.getParam('companyID', undefined);
         const companyName = this.props.navigation.getParam('companyName', undefined);
         const itemID = this.props.navigation.getParam('itemID', undefined);
-        const componentName = `${compType} ${companyId}`;
 
-        const url = 'https://t.damoa.io:8092/graph?quick=' + itemID;
+        const url = 'https://t.damoa.io:8092/graph'//'https://t.damoa.io:8092/graph?quick=' + itemID;
+
+        this.setState({ name: name, companyName: companyName, itemID: itemID, url: url});
+    };
+
+    render() {
+        // const compType = this.props.navigation.getParam('compType', undefined);
+        // const companyId = this.props.navigation.getParam('companyID', undefined);
+        // const componentName = `${compType} ${companyId}`;
 
         let WebViewRef;
+        let {visible, name, companyName, itemID, url} = this.state;
 
         return (
             <View style={styles.container}>
@@ -84,22 +92,27 @@ export default class Link extends Component {
                 </View>*/}
                 <View style={{ justifycontent: 'flex_end', alignItems: 'center', marginTop: 10, width: width, height: height / 4 * 3 }}>
                     <WebView
-                        injectedJavaScript={`const meta = document.createElement('meta'); meta.setAttribute('content', 'width=width, initial-scale=0.5, maximum-scale=3.0, user-scalable=3.0'); meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta); `}
+                        injectedJavaScript={INJECTED_JS}
                         ref={WEBVIEW_REF => (WebViewRef = WEBVIEW_REF)}
                         source={{ uri: url }}
                         style={{ marginTop: 5, width: width }}
-                        renderLoading={this.renderLoading} 
-                        javaScriptEnabled={true}
                         scalesPageToFit={false}
                         onLoadEnd={() => {this.hideSpinner()}}
                         onError={() => {
                             if (this.countTimeout()) {
-                                WebViewRef.reload()
+                                this.makeSpinnerVisible();
+                                WebViewRef.reload();
                             } else {
                                 this.props.navigation.goBack();
                             }
                         }} //reload on error
                     />
+                    {visible && (
+                        <ActivityIndicator
+                            style={{ position: "absolute", top: height / 3, left: width / 2 }}
+                            size="large"
+                        />
+                    )}
                 </View>
             </View>
         );
