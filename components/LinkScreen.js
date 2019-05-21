@@ -18,23 +18,23 @@ export default class Link extends Component {
     }
 
     state = {
-        visible: true,
         count: 0
     }
 
+    /**
+     * Render the loading state.
+     */
     renderLoading = () => {
-        return (<ActivityIndicator
-            style={{ position: "absolute", top: height / 3, left: width / 2 }}
-            size="large"
-        />);
-    }
-
-    hideSpinner() {
-        this.setState({ visible: false });
+        return (
+            <ActivityIndicator
+                style={{ position: "absolute", top: height / 3, left: width / 2 }}
+                size="large"
+            />
+        );
     }
 
     countTimeout = () => {
-        const count = this.state.count;
+        const {count} = this.state;
         this.setState({ count: count + 1 });
 
         if (count < 4) {
@@ -70,7 +70,6 @@ export default class Link extends Component {
         const url = 'https://t.damoa.io:8092/graph?quick=' + itemID;
 
         let WebViewRef;
-        let { visible } = this.state;
 
         return (
             <View style={styles.container}>
@@ -89,7 +88,7 @@ export default class Link extends Component {
                         ref={WEBVIEW_REF => (WebViewRef = WEBVIEW_REF)}
                         source={{ uri: url }}
                         style={{ marginTop: 5, width: width }}
-                        //renderLoading={this.renderLoading}
+                        renderLoading={this.renderLoading} 
                         javaScriptEnabled={true}
                         scalesPageToFit={false}
                         onLoadEnd={() => {this.hideSpinner()}}
@@ -101,19 +100,13 @@ export default class Link extends Component {
                             }
                         }} //reload on error
                     />
-                    {visible && (
-                        <ActivityIndicator
-                            style={{ position: "absolute", top: height / 3, left: width / 2 }}
-                            size="large"
-                        />
-                    )}
                 </View>
             </View>
         );
     }
 }
 
-
+// stylesheet of the link screen
 const styles = StyleSheet.create({
     container: {
         flexGrow: 1,
