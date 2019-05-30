@@ -12,6 +12,7 @@ import {
 
 const { width, height } = Dimensions.get('window');
 const INJECTED_JS = `const meta = document.createElement('meta'); meta.setAttribute('content', 'width=width, initial-scale=0.5, maximum-scale=3.0, user-scalable=3.0'); meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta); `;
+const URL = 'https://t.damoa.io:8092/graph';
 
 export default class Link extends Component {
     constructor(props) {
@@ -24,7 +25,7 @@ export default class Link extends Component {
         name: '',
         companyName: '',
         itemID: '',
-        url: 'https://t.damoa.io:8092/graph?quick='
+        url: URL
     }
 
     hideSpinner() {
@@ -61,14 +62,13 @@ export default class Link extends Component {
         headerTintColor: '#fff',
     };
 
-    componentDidMount = () => {
+    componentWillMount = () => {
         const name = this.props.navigation.getParam('name', undefined);
         const companyName = this.props.navigation.getParam('companyName', undefined);
         const itemID = this.props.navigation.getParam('itemID', undefined);
+        const url = URL + '?quick=' + itemID;
 
-        const url = 'https://t.damoa.io:8092/graph?quick=' + itemID;
-
-        this.setState({ name: name, companyName: companyName, itemID: itemID, url: url});
+        this.setState({ name: name, companyName: companyName, itemID: itemID, url: url });
     };
 
     render() {
@@ -77,7 +77,7 @@ export default class Link extends Component {
         // const componentName = `${compType} ${companyId}`;
 
         let WebViewRef;
-        let {visible, name, companyName, itemID, url} = this.state;
+        let {visible, name, companyName, url} = this.state;
 
         return (
             <View style={styles.container}>
@@ -97,19 +97,26 @@ export default class Link extends Component {
                         source={{ uri: url }}
                         style={{ marginTop: 5, width: width }}
                         scalesPageToFit={false}
+                        domStorageEnabled={true}
+                        javaScriptEnabled={true}
                         onLoadEnd={() => {this.hideSpinner()}}
-                        onError={() => {
-                            if (this.countTimeout()) {
-                                this.makeSpinnerVisible();
-                                WebViewRef.reload();
+                        mixedContentMode='always'
+                        onError={(e) => {
+                            if (!e.canGoBack) {
+                                if (this.countTimeout()) {
+                                    this.makeSpinnerVisible();
+                                    WebViewRef.reload();
+                                } else {
+                                    this.props.navigation.goBack();
+                                }
                             } else {
-                                this.props.navigation.goBack();
+                                WebViewRef.goBack();
                             }
                         }} //reload on error
                     />
                     {visible && (
                         <ActivityIndicator
-                            style={{ position: "absolute", top: height / 3, left: width / 2 }}
+                            style={styles.activityIndicator}
                             size="large"
                         />
                     )}
@@ -215,5 +222,10 @@ const styles = StyleSheet.create({
     dataButtonText_selected: {
         fontSize: width / 20,
         color: 'white'
+    },
+    activityIndicator: {
+        position: "absolute",
+        top: height / 3,
+        left: width / 2
     }
 });

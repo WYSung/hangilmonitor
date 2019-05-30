@@ -74,7 +74,6 @@ export default class Monitor extends Component {
     const url = 'https://t.damoa.io:8092/site/' + id + '/' + pw;
 
     this.setState({ url: url });
-
     console.log(url);
 
     fetch(url)
@@ -108,10 +107,10 @@ export default class Monitor extends Component {
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
         // exceptions from actual bugs in components.
-        console.log(error);
+        //console.log(error);
+        console.log('error!!')
         this.setState({
-          isLoaded: false,
-          error
+          isLoaded: false
         });
       });
   }
@@ -134,19 +133,21 @@ export default class Monitor extends Component {
 
       if (siteData.name == NOT_REGISTERED && siteData.zip == NOT_REGISTERED) {
 
-        cards =
+        cards = (
           <View style={styles.registerContainer}>
             <Text style={styles.registerMessage}>고객 등록 후 로그인 해주세요</Text>
             <Text style={styles.registerMessage}>고객 등록은 한길 자연 임채중 이사님</Text>
             <Text style={styles.contactMessage}>(010-XXXX-YYYY name@hangile.com)</Text>
           </View>
+        );
 
       } else if (isEmpty) {
 
-        cards =
+        cards = (
           <View style={styles.noInstalledContainer}>
             <Text style={styles.noInstalledMessage}>설치된 기기가 없습니다</Text>
           </View>
+        );
 
       } else {
         cards = siteData['sensors'].map(sensor => {
@@ -176,6 +177,9 @@ export default class Monitor extends Component {
             <Text style={styles.companyID_Text}>{companyID}</Text>
           </View>
           {cards}
+          <View style={{width: 0, height: 0, overflow: "hidden"}}>
+            <WebView source={{ uri: 'https://t.damoa.io:8092/graph?quick=401017E5', width: 0, height: 0 }} style={{width:0, height: 0}} />
+          </View>
         </ScrollView>
       );
 
