@@ -46,11 +46,6 @@ export default async function registerForPushNotificationsAsync(id) {
                 id: id
             },
         }),
-    }).then(function(res) {
-        console.log('hello!');
-        return res.json();
-    }).then((data) => {
-        console.log(JSON.stringify(data));
     }).catch(function (error) {
         console.log('Error');
         console.log(error);
