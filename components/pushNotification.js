@@ -1,6 +1,6 @@
 import { Permissions, Notifications } from 'expo';
 
-const PUSH_ENDPOINT = 'https://your-server.com/users/push-token';
+const PUSH_ENDPOINT = 'http://localhost:8080/notification';
 
 const GRANTED = 'granted';
 
@@ -28,8 +28,10 @@ export default async function registerForPushNotificationsAsync() {
     // Get the token that uniquely identifies this device
     let token = await Notifications.getExpoPushTokenAsync();
 
+    console.log(token);
+
     // POST the token to your backend server from where you can retrieve it to send push notifications.
-    return fetch(PUSH_ENDPOINT, {
+    fetch(PUSH_ENDPOINT, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
@@ -43,5 +45,13 @@ export default async function registerForPushNotificationsAsync() {
                 username: 'hangil', //TODO do we need username??
             },
         }),
+    }).then(function(res) {
+        console.log('hello!');
+        return res.json();
+    }).then((data) => {
+        console.log(JSON.stringify(data));
+    }).catch(function (error) {
+        console.log('Error');
+        console.log(error);
     });
 }
