@@ -8,6 +8,9 @@ import {
   ScrollView,
   WebView
 } from 'react-native';
+import {
+  Notifications,
+} from 'expo';
 import uuidv1 from 'uuid/v1';
 
 import Card from './Card';
@@ -35,7 +38,9 @@ export default class Monitor extends Component {
       companyName: '',
       siteData: undefined,
       url: '',
-      isEmpty: false
+      isEmpty: false,
+      id: '',
+      notification: {}
     };
   }
 
@@ -53,6 +58,7 @@ export default class Monitor extends Component {
     //BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
 
     this.props.navigation.navigate('Link', {
+      id: id,
       name: name,
       compType: type,
       companyID: companyID,
@@ -66,14 +72,12 @@ export default class Monitor extends Component {
     return true;
   }
 
-  fetchData = () => {
-    const id = this.props.navigation.getParam('id', '0000');
-    const pw = this.props.navigation.getParam('pw', 'suho1004');
+  fetchData = (id, pw) => {
 
     //http -> http://t.damoa.io:8090/site/
     const url = 'https://t.damoa.io:8092/site/' + id + '/' + pw;
 
-    this.setState({ url: url });
+    this.setState({ id: id, url: url });
     console.log(url);
 
     fetch(url)
@@ -119,11 +123,21 @@ export default class Monitor extends Component {
    * Get the data by using https protocol when the component is mounted.
    */
   componentDidMount() {
-    this.fetchData();
-    registerForPushNotificationsAsync();
+    const id = this.props.navigation.getParam('id', '0000');
+    const pw = this.props.navigation.getParam('pw', 'suho1004');
+
+    this.fetchData(id, pw);
+
+    registerForPushNotificationsAsync(id);
     //BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+
+    this.notificationSubscription = Notifications.addListener(this.handleNotification);
   }
- 
+
+  handleNotification = (notification) => {
+    this.setState({ notification: notification });
+  };
+
   render() {
     const { isLoaded, companyID, companyName, siteData, isEmpty } = this.state;
 

@@ -1,10 +1,10 @@
 import { Permissions, Notifications } from 'expo';
 
-const PUSH_ENDPOINT = 'http://localhost:8080/notification';
+const PUSH_ENDPOINT = 'http://172.30.1.28:8080/notification'; //TODO endpoint
 
 const GRANTED = 'granted';
 
-export default async function registerForPushNotificationsAsync() {
+export default async function registerForPushNotificationsAsync(id) {
     const { status: existingStatus } = await Permissions.getAsync(
         Permissions.NOTIFICATIONS
     );
@@ -15,6 +15,7 @@ export default async function registerForPushNotificationsAsync() {
      * It will only ask if permissions have not already been determined, because iOS won't necessarily prompt the user a second time.
      */
     if (existingStatus !== GRANTED) {
+        alert("You need to grant the permission for push notification");
         // Android remote notification permissions are granted during the app install, so this will only ask on iOS
         const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
         finalStatus = status;
@@ -42,7 +43,7 @@ export default async function registerForPushNotificationsAsync() {
                 value: token,
             },
             user: {
-                username: 'hangil', //TODO do we need username??
+                id: id
             },
         }),
     }).then(function(res) {
