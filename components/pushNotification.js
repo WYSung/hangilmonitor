@@ -59,7 +59,7 @@ export default async function registerForPushNotificationsAsync(id) {
                 sound: true,
             });
 
-            AsyncStorage.setItem(ASYNC_STORAGE_KEY, ASYNC_STORAGE_VALUE);
+            await AsyncStorage.setItem(ASYNC_STORAGE_KEY, ASYNC_STORAGE_VALUE);
         }
     }
 
@@ -71,12 +71,10 @@ export default async function registerForPushNotificationsAsync(id) {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            token: {
-                value: token,
-            },
-            user: {
-                id: id
-            },
+            data: {
+                token: token,
+                user: id
+            }
         }),
     }).catch(function (error) {
         if (error)
