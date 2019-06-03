@@ -1,5 +1,5 @@
 import { Permissions, Notifications } from 'expo';
-import { Platform } from 'react-native';
+import { Platform, AsyncStorage } from 'react-native';
 
 const PUSH_ENDPOINT = 'http://172.30.1.28:8080/notification'; //TODO endpoint
 
@@ -7,6 +7,8 @@ const GRANTED = 'granted';
 const ALERT_MSG = "You need to grant the permission for push notification";
 const CHANNEL_ID = 'Hangil_Notification_Channel';
 const CHANNEL_NAME = 'NOTIFICATION NAME';
+const ASYNC_STORAGE_KEY = 'Hangil@channel';
+const ASYNC_STORAGE_VALUE = 'exist';
 
 
 /**
@@ -47,10 +49,18 @@ export default async function registerForPushNotificationsAsync(id) {
      * Apparently, this is unnecessary for ios.
      */
     if (Platform.OS === 'android') {
-        Expo.Notifications.createChannelAndroidAsync(CHANNEL_ID, {
-            name: CHANNEL_NAME,
-            sound: true,
-        });
+        let isCreated = AsyncStorage.getItem(ASYNC_STORAGE_KEY, undefined);
+
+        console.log(isCreated) //TODO need to use this debugging message to test if the AsyncStorage works properly.
+
+        if (!isCreated) {
+            Notifications.createChannelAndroidAsync(CHANNEL_ID, {
+                name: CHANNEL_NAME,
+                sound: true,
+            });
+
+            AsyncStorage.setItem(ASYNC_STORAGE_KEY, ASYNC_STORAGE_VALUE);
+        }
     }
 
     // POST the token to your backend server from where you can retrieve it to send push notifications.
