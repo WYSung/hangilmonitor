@@ -8,8 +8,11 @@ import {
     WebView,
     ActivityIndicator
 } from 'react-native';
+//import { WebView } from 'react-native-webview';
 
 const { width, height } = Dimensions.get('window');
+const INJECTED_JS = `const meta = document.createElement('meta'); meta.setAttribute('content', 'width=width, initial-scale=0.5, maximum-scale=3.0, user-scalable=3.0'); meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta); `;
+const URL = 'https://t.damoa.io:8092/graph';
 
 export default class Link extends Component {
     constructor(props) {
@@ -18,15 +21,23 @@ export default class Link extends Component {
 
     state = {
         visible: true,
-        count: 0
+        count: 0,
+        name: '',
+        companyName: '',
+        itemID: '',
+        url: URL
     }
 
     hideSpinner() {
         this.setState({ visible: false });
     }
 
+    makeSpinnerVisible() {
+        this.setState({ visible: true });
+    }
+
     countTimeout = () => {
-        const count = this.state.count;
+        const {count} = this.state;
         this.setState({ count: count + 1 });
 
         if (count < 4) {
@@ -40,60 +51,72 @@ export default class Link extends Component {
      * Set the size of the navigation header with suitable height and suitable font size.
      */
     static navigationOptions = {
-      title: '지능형 IoT 모니터링',
-      headerStyle: {
-        backgroundColor: '#1a3f95',
-        height: height / 10
-      },
-      headerTitleStyle: {
-          fontSize: width / 20
-      },
-      headerTintColor: '#fff',
+        title: '지능형 IoT 모니터링',
+        headerStyle: {
+            backgroundColor: '#1a3f95',
+            height: height / 10
+        },
+        headerTitleStyle: {
+            fontSize: width / 20
+        },
+        headerTintColor: '#fff',
+    };
+
+    componentWillMount = () => {
+        const name = this.props.navigation.getParam('name', undefined);
+        const companyName = this.props.navigation.getParam('companyName', undefined);
+        const itemID = this.props.navigation.getParam('itemID', undefined);
+        const url = URL + '?quick=' + itemID;
+
+        this.setState({ name: name, companyName: companyName, itemID: itemID, url: url });
     };
 
     render() {
-        const name = this.props.navigation.getParam('name', undefined);
-        const compType = this.props.navigation.getParam('compType', undefined);
-        const companyId = this.props.navigation.getParam('companyID', undefined);
-        const companyName = this.props.navigation.getParam('companyName', undefined);
-        const itemID = this.props.navigation.getParam('itemID', undefined);
-        const componentName = `${compType} ${name}`;
-
-        const url = 'http://t.damoa.io:8090/graph?quick=' + itemID;
+        // const compType = this.props.navigation.getParam('compType', undefined);
+        // const companyId = this.props.navigation.getParam('companyID', undefined);
+        // const componentName = `${compType} ${companyId}`;
 
         let WebViewRef;
+        let {visible, name, companyName, url} = this.state;
 
-        return(
+        return (
             <View style={styles.container}>
                 <StatusBar barStyle='light-content'></StatusBar>
                 <View style={styles.companyInfo}>
                     <Text style={styles.companyName}>{companyName}</Text>
-                    <Text style={styles.companyID}>{companyId}</Text>
+                    <Text style={styles.companyID}>{name}</Text>
                 </View>
-                <View style={styles.componentView}>
+                {/*<View style={styles.componentView}>
                     <Text style={styles.componentName}>{componentName}</Text>
                     <Text style={styles.componentName}>{itemID}</Text>
-                </View>
-                <View style={{ justifycontent: 'flex_end', alignItems:'center', marginTop: 10, width: width, height: height / 4 * 3 }}>
+                </View>*/}
+                <View style={{ justifycontent: 'flex_end', alignItems: 'center', marginTop: 10, width: width, height: height / 4 * 3 }}>
                     <WebView
-                        injectedJavaScript={`const meta = document.createElement('meta'); meta.setAttribute('content', 'width=width, initial-scale=0.4, maximum-scale=3.0, user-scalable=3.0'); meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta); `}
+                        injectedJavaScript={INJECTED_JS}
                         ref={WEBVIEW_REF => (WebViewRef = WEBVIEW_REF)}
-                        source={{ uri: url }} 
-                        style={{ marginTop: 5, width: width }} 
-                        onLoad={() => this.hideSpinner()} 
-                        javaScriptEnabled={true} 
-                        scalesPageToFit={false} 
-                        onError={() => {
-                            if (this.countTimeout()) {
-                                WebViewRef.reload()
+                        source={{ uri: url }}
+                        style={{ marginTop: 5, width: width }}
+                        scalesPageToFit={false}
+                        domStorageEnabled={true}
+                        javaScriptEnabled={true}
+                        onLoadEnd={() => {this.hideSpinner()}}
+                        mixedContentMode='always'
+                        onError={(e) => {
+                            if (!e.canGoBack) {
+                                if (this.countTimeout()) {
+                                    this.makeSpinnerVisible();
+                                    WebViewRef.reload();
+                                } else {
+                                    this.props.navigation.goBack();
+                                }
                             } else {
-                                this.props.navigation.goBack();
+                                WebViewRef.goBack();
                             }
                         }} //reload on error
                     />
-                    {this.state.visible && (
+                    {visible && (
                         <ActivityIndicator
-                            style={{ position: "absolute", top: height / 3, left: width / 2 }}
+                            style={styles.activityIndicator}
                             size="large"
                         />
                     )}
@@ -103,7 +126,7 @@ export default class Link extends Component {
     }
 }
 
-
+// stylesheet of the link screen
 const styles = StyleSheet.create({
     container: {
         flexGrow: 1,
@@ -142,19 +165,19 @@ const styles = StyleSheet.create({
     dateRangePicker: {
         width: width,
         backgroundColor: '#1a3f95',
-        fontSize : width / 25,
+        fontSize: width / 25,
         paddingVertical: height / 60,
         flexDirection: 'row',
         alignItems: 'center'
     },
     date_highlighted: {
         color: '#0bb7b4',
-        fontSize : width / 25,
+        fontSize: width / 25,
         marginLeft: width / 20
     },
     date_normal: {
         color: 'grey',
-        fontSize : width / 25,
+        fontSize: width / 25,
         marginLeft: width / 20
     },
     oneDayContainer: {
@@ -199,5 +222,10 @@ const styles = StyleSheet.create({
     dataButtonText_selected: {
         fontSize: width / 20,
         color: 'white'
+    },
+    activityIndicator: {
+        position: "absolute",
+        top: height / 3,
+        left: width / 2
     }
 });
