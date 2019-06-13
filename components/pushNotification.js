@@ -72,7 +72,7 @@ export default async function registerForPushNotificationsAsync(id) {
             body: JSON.stringify({
                 data: {
                     token: token,
-                    user: id
+                    id: id
                 }
             }),
         }).catch(function (error) {
