@@ -52,8 +52,7 @@ export default class Monitor extends Component {
    * @param {itemID}
    */
   navigateToLinkScreen = (name, type, itemID) => {
-    const companyID = this.state.companyID;
-    const companyName = this.state.companyName;
+    const {companyID, companyName, id} = this.state;
 
     //BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
 
