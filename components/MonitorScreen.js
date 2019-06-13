@@ -54,8 +54,6 @@ export default class Monitor extends Component {
   navigateToLinkScreen = (name, type, itemID) => {
     const {companyID, companyName, id} = this.state;
 
-    //BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-
     this.props.navigation.navigate('Link', {
       id: id,
       name: name,
@@ -128,7 +126,6 @@ export default class Monitor extends Component {
     this.fetchData(id, pw);
 
     registerForPushNotificationsAsync(id);
-    //BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
 
     this.notificationSubscription = Notifications.addListener(this.handleNotification);
   }

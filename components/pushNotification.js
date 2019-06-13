@@ -16,6 +16,10 @@ const ASYNC_STORAGE_VALUE = 'exist';
  * @param {String} id The ID string.
  */
 export default async function registerForPushNotificationsAsync(id) {
+    //await AsyncStorage.removeItem(ASYNC_STORAGE_KEY);
+    //await Notifications.getBadgeNumberAsync().then(val => console.log(val)).catch(err => {console.log(err)})
+    //await Notifications.presentLocalNotificationAsync().then((val) => console.log(val)).catch((err) => console.log(err));
+
     let isCreated = await AsyncStorage.getItem(ASYNC_STORAGE_KEY, undefined);
 
     // check if the channel is created
@@ -56,11 +60,15 @@ export default async function registerForPushNotificationsAsync(id) {
         * Apparently, this is unnecessary for ios.
         */
         if (Platform.OS === 'android') {
+            await Notifications.deleteChannelAndroidAsync(CHANNEL_ID); //remove the existing channel to make a new one
+
             Notifications.createChannelAndroidAsync(CHANNEL_ID, {
                 name: CHANNEL_NAME,
                 sound: true,
             });
         }
+
+        await AsyncStorage.setItem(ASYNC_STORAGE_KEY, ASYNC_STORAGE_VALUE);
 
         // POST the token to your backend server from where you can retrieve it to send push notifications.
         fetch(PUSH_ENDPOINT, {
@@ -71,15 +79,13 @@ export default async function registerForPushNotificationsAsync(id) {
             },
             body: JSON.stringify({
                 data: {
-                    token: token,
-                    id: id
+                    id: id,
+                    token: token
                 }
             }),
         }).catch(function (error) {
             if (error)
                 console.log('Error');
         });
-
-        await AsyncStorage.setItem(ASYNC_STORAGE_KEY, ASYNC_STORAGE_VALUE);
     }
 }
