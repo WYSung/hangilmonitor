@@ -3,3 +3,4 @@ node_modules
 */.project
 android
 .dist
+.DS_Store

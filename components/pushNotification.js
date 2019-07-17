@@ -1,7 +1,7 @@
 import { Permissions, Notifications } from 'expo';
 import { Platform, AsyncStorage } from 'react-native';
 
-const PUSH_ENDPOINT = 'https://your-server.com/endpoint'; //TODO endpoint URL
+const PUSH_ENDPOINT = 'http://172.30.1.34:9090/token'; //'https://your-server.com/endpoint'; //TODO endpoint URL
 
 const GRANTED = 'granted';
 const ALERT_MSG = "You need to grant the permission for push notification";
