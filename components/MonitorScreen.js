@@ -14,7 +14,7 @@ import {
 import uuidv1 from 'uuid/v1';
 
 import Card from './Card';
-import registerForPushNotificationsAsync from './pushNotification'; //TODO need to test
+//import registerForPushNotificationsAsync from './pushNotification';
 
 
 const { width, height } = Dimensions.get('window');
@@ -125,7 +125,7 @@ export default class Monitor extends Component {
 
     this.fetchData(id, pw);
 
-    registerForPushNotificationsAsync(id);
+    //registerForPushNotificationsAsync(id); //the method call to reigster the push notification
 
     this.notificationSubscription = Notifications.addListener(this.handleNotification);
   }
