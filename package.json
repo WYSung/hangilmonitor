@@ -6,7 +6,7 @@
   "private": true,
   "main": "node_modules/expo/AppEntry.js",
   "dependencies": {
-    "expo": "^32.0.6",
+    "expo": "^46.0.14",
     "expokit": "^31.1.0",
     "prop-types": "15.6.2",
     "react": "16.5.0",
